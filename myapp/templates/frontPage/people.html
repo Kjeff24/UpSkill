@@ -1,0 +1,27 @@
+{% load static %} 
+{% load i18n %} 
+<div class="p-3 rounded-3 m-3" style="background-color: #3f4156" ;>
+  <h1 class="color-blue text-center">
+    {% translate "Building better learning experiences with SkillBuilder" %}
+  </h1>
+  <p class="color-light text-center">
+    {% translate "Read inspiring stories from around the world on how SkillBuilder is being used to manage online learning and improve learner outcomes." %}
+  </p>
+  <div class="text-center">
+    <img
+      src="{% static 'assets/card-img-1.jpg' %}"
+      alt="splash"
+      class="img-fluid people p-1"
+    />
+    <img
+      src="{% static 'assets/card-img-2.jpg' %}"
+      alt="splash"
+      class="img-fluid people p-1"
+    />
+    <img
+      src="{% static 'assets/card-img-3.jpg' %}"
+      alt="splash"
+      class="img-fluid people p-1"
+    />
+  </div>
+</div>

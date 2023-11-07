@@ -1,0 +1,50 @@
+{% extends 'front_page.html' %} 
+{% load static %} 
+{% load i18n %} 
+{% block content %}
+<div class="container-fluid p-0">
+  <div
+    class="d-flex flex-md-row flex-column p-3 m-3 rounded-3 gap-3"
+    style="background-color: #3f4156"
+  >
+    <div class="col-lg-6 color-light">
+      <h2 class="color-blue fs-4">
+        {% translate "SkillBuilder is one of the world&#39;s largest employee training platform" %}
+        
+      </h2>
+      <p>
+        {% translate "We leverage open-source software to deliver a highly effective, customized, and engaging learning experience." %}
+      </p>
+      <h2 class="color-blue fs-4">
+        {% translate "With our extensive experience, we are confident that we can be your ideal eLearning partner." %}
+      </h2>
+      <p class="title-info-1">
+        {% translate "At Skillbuilder, we are on a mission to empower employers to improve our world with open source employee training software. With hundreds of millions of users around the globe and translated into 2 languages, SkillBuilder gives you the freedom to create online teaching and training solutions that best meet your learners&#39; needs." %}
+        
+      </p>
+    </div>
+    <div class="col-lg-6">
+      <img
+        src="{% static 'assets/about-bg-1.jpg' %}"
+        alt="splash"
+        class="img-fluid rounded mx-auto d-block p-2"
+      />
+    </div>
+  </div>
+  {% include 'frontPage/mini_about.html' %} 
+  {% include 'frontPage/people.html' %}
+  <div class="p-3">
+    <div>
+        <p class="text-center color-light">
+          {% translate "Open LMS provides world-class LMS solutions that empower organizations to meet education and workplace learning needs. Get in touch to find out more." %}
+        </p>
+    </div>
+    <div class="text-center">
+        <a class="btn btn-secondary" href="{% url 'contact' %}">
+          {% translate "Get In Touch With Us" %}
+        </a>
+    </div>
+</div>
+  {% include 'front_page_footer.html' %}
+</div>
+{% endblock %}

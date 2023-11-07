@@ -1,0 +1,28 @@
+
+.input-container, .check{
+    user-select: none;
+}
+
+.signup-heading, .icon-logo{
+    color: #3f4156;
+}
+
+.btn-register{
+    background-color: #3f4156;
+    color: white;
+}
+
+.btn-register:hover{
+    background-color: #696d97;
+    color: white;
+}
+
+.signup-employee{
+    color: #3f4156;
+    text-decoration: none;
+}
+
+.signup-employee:hover{
+    color: #696d97;
+    text-decoration: underline;
+}

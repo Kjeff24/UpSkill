@@ -1,0 +1,41 @@
+{% extends 'main.html' %} {% load static %} | {% block content %}
+<div>
+    <h1>Quiz</h1>
+    <hr>
+    <br>
+    <h3>
+        <a href="{% url 'quizes:main-view' pk2=course.id %}" target="_blank"> Quiz Page</a>
+    </h3>
+    <br>
+    <h3>Grade book</h3>
+    
+    <table class="table table-hover table-striped">
+        <tr>
+            <th>Quiz Title</th>
+            <th>Time taken(mins)</th>
+            <th>Required Score To Pass(%)</th>
+            <th>Score(%)</th>
+            <th>Date Completed</th>
+        </tr>
+        {% for result in user_results %}
+        <tr class="{% if result.score >= result.quiz.required_score_to_pass %} bg-primary {% else %} bg-danger{% endif %} text-white" >
+            <td>
+                {{result.quiz}}
+            </td>
+            <td>
+                {{result.completion_time}}
+            </td>
+            <td>
+                {{result.quiz.required_score_to_pass}}
+            </td>
+            <td class="fw-bold">
+                {{result.score}}
+            </td>
+            <td class="fw-bold">
+                {{result.created}}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

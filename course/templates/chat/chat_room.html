@@ -1,0 +1,72 @@
+{% extends 'main.html' %} {% load static %} | {% block content %}
+<div
+  class="chat-container"
+  data-room-id="{{room.id}}"
+  data-current-user="{{request.user}}"
+>
+  <!-- msg-header section starts -->
+  <div class="msg-header">
+    <h1 class="msg-course-title">{{room}}</h1>
+    <div class="video-stream">
+      <a href="{% url 'video-stream' room.id %}">
+        <img src="{% static 'assets/video.svg' %}" alt="video" />
+      </a>
+    </div>
+  </div>
+  <!-- msg-header section ends -->
+  <!-- Chat inbox  -->
+  <div class="chat-page">
+    <div class="msg-inbox">
+      <div class="chats">
+        <div class="scroll-to-bottom-widget">
+          <button class="scroll-to-top-button" onclick="scrollToTop()">
+            <img
+              src="{% static 'assets/scroll-top.svg' %}"
+              alt="Scroll to top"
+              class="button-image"
+            />
+            <span class="button-hover-text">Scroll to the Top of the page</span>
+          </button>
+          <br />
+          <button class="scroll-to-bottom-button" onclick="scrollToBottom()">
+            <img
+              src="{% static 'assets/scroll-bottom.svg' %}"
+              alt="Scroll to Bottom"
+              class="button-image"
+            />
+            <span class="button-hover-text"
+              >Scroll to the bottom of the page</span
+            >
+          </button>
+        </div>
+        <!-- Message container -->
+        <div class="msg-page"></div>
+      </div>
+
+      <!-- msg-bottom section -->
+      <form method="POST" id="message">
+        {% csrf_token %}
+        <div class="send-message-forms">
+          <div>
+            <textarea
+              name="body"
+              id="msg"
+              cols="50"
+              rows="1"
+              placeholder="Write message..."
+            ></textarea>
+          </div>
+          <div>
+            <input
+              type="image"
+              src="{% static 'assets/send-icon.svg' %}"
+              alt="Submit"
+              class="image-button"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

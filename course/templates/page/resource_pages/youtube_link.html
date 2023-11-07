@@ -1,0 +1,71 @@
+{% load static %}
+{% if youtube_links %}
+<div>
+    <h3>Youtube Video</h3>
+    <div>
+        {% for resource in youtube_links %}
+        <div>
+            <div class="d-resources">
+                <p>
+                    {{resource.name}}
+                    {% if resource.description %}
+                    <p>Description: {{resource.description}}</p>
+                    {% else %}
+                    <p>Description: N/A</p>
+                    {% endif %}
+                    
+                </p>
+                <div class="d-flex flex-column flex-md-row mt-3 justify-content-between">
+                    <a class="view text-dark btn btn-outline-primary btn-sm col-lg-2 col-sm-6 fs-6 mb-1" target="_blank" download>Preview/Info</a>
+                    
+                </div>
+                
+            </div>
+            <div class="view-details">
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Created By</th>
+                        <th>Creation Time</th>
+                        <th>Last Modified Time</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if resource.name %} {{resource.name}} {% else %} N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if course.instructor %}
+                            <p>{{course.instructor}}</p>
+                            {% else %}
+                            <p>N/A</p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if resource.created|timesince %}
+                            <p>{{resource.created|timesince}}</p>
+                            {% else %}
+                            <p>N/A</p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if resource.updated|timesince %}
+                            <p>{{resource.updated|timesince}}</p>
+                            {% else %}
+                            <p>N/A</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+                <div class="d-flex justify-content-center">
+                    <div class="embed-responsive embed-responsive-16by9">{{resource.youtubeLink|safe}}</div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<p>No youtube video available</p>
+{% endif %}

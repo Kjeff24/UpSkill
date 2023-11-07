@@ -1,0 +1,63 @@
+{% extends 'main.html' %} {% load static %} | {% block content %}
+<div>
+    <h1>Announcements</h1>
+    {% if announcements %}
+    
+    <table class="table table-hover table-striped">
+        <tr class="announcement-header">
+            <th>Subject</th>
+            <th>Saved By</th>
+            <th>Creation Time</th>
+            <th>Last Modified Time</th>
+            
+        </tr>
+        {% for announcement in announcements %}
+        <tr>
+            <td class="view announcement-view"> <a>
+                {% if announcement.title %}
+                {{announcement.title}}
+                {% else %}
+                N/A
+                {% endif %}
+            </a>
+            </td>
+            <td>
+                {% if course.instructor %}
+                <p>{{course.instructor}}</p>
+                {% else %}
+                <p>N/A</p>
+                {% endif %}
+            </td>
+            <td>
+                {% if announcement.created|timesince %}
+                <p>{{announcement.created|timesince}}</p>
+                {% else %}
+                <p>N/A</p>
+                {% endif %}
+            </td>
+            <td>
+                {% if announcement.updated|timesince %}
+                <p>{{announcement.updated|timesince}}</p>
+                {% else %}
+                <p>N/A</p>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div class="view-details">
+                    <h4>Message: </h4>
+                    <br>
+                    <p>{{announcement.content}}</p>
+                    <hr>
+                </div>
+                <br>
+            </tr>
+            </td>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Annoucement not available</p>
+    {% endif %}
+</div>
+{% endblock %}
