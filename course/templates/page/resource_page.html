@@ -1,13 +1,21 @@
 {% extends 'main.html' %} {% load static %} | {% block content %}
 <h1>Resources</h1>
+<form class="d-flex" action="{% url 'resource' course.id %}" method="GET">
+  <input
+    class="form-control me-2"
+    type="text"
+    placeholder="Search for files..."
+    name="q"
+    aria-label="Search"
+  />
+  <button class="btn btn btn-outline-primary" type="submit">Search</button>
+</form>
 {% include 'page/resource_pages/pdf.html' %}
-<br>
+<br />
 {% include 'page/resource_pages/image.html' %}
-<br>
+<br />
 {% include 'page/resource_pages/audio.html' %}
-<br>
+<br />
 {% include 'page/resource_pages/video.html' %}
-<br>
-{% include 'page/resource_pages/youtube_link.html' %}
-
-{% endblock %}
+<br />
+{% include 'page/resource_pages/youtube_link.html' %} {% endblock %}
