@@ -1,54 +1,59 @@
 .footer {
-    padding: 2rem;
-    background-color: #3f4156;
-    color: white;
-  }
-  
-  .container {
-    text-align: center;
-  }
-  
+  padding: 2rem;
+  background-color: #3f4156;
+  color: white;
+}
 
-  /* Picture content */
-  .rounded-section {
-    padding: 1.5rem;
-    margin: 1.5rem;
-    background-color: #3f4156;
-    border-radius: 0.75rem;
-  }
-  
-  .color-blue {
-    /* Your color and text centering */
-  }
-  
-  .color-light {
-    /* Your light color text styling */
-  }
-  
-  .image-container {
-    /* Container to handle the image layout */
-  }
-  
-  .rounded-image {
-    border-radius: 50%; /* This will make the image round */
-    width: 100px; /* Set a fixed width */
-    height: 100px; /* Set the height equal to the width to maintain a circle */
-    object-fit: cover; /* This will handle the image scaling */
-  }
-  
-  /* Additional styles and responsiveness */
-  @media (max-width: 768px) {
-    .rounded-image {
-      width: 75px; /* Smaller width for smaller screens */
-      height: 75px; /* Keep height equal to the width */
-    }
-  }
+.container {
+  text-align: center;
+}
 
-  .about-section {
+/* Picture content */
+.rounded-section {
   padding: 1.5rem;
   margin: 1.5rem;
   background-color: #3f4156;
-  border-radius: .75rem;
+  border-radius: 0.75rem;
+}
+
+.color-blue {
+  /* Your color and text centering */
+}
+
+.color-light {
+  /* Your light color text styling */
+}
+
+.image-container {
+  /* Container to handle the image layout */
+}
+
+.rounded-image {
+  border-radius: 50%; /* This will make the image round */
+  width: 100px; /* Set a fixed width */
+  height: 100px; /* Set the height equal to the width to maintain a circle */
+  object-fit: cover; /* This will handle the image scaling */
+  transition: all 0.3s;
+}
+
+.rounded-image:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+/* Additional styles and responsiveness */
+@media (max-width: 768px) {
+  .rounded-image {
+    width: 75px; /* Smaller width for smaller screens */
+    height: 75px; /* Keep height equal to the width */
+  }
+}
+
+.about-section {
+  padding: 1.5rem;
+  margin: 1.5rem;
+  background-color: #3f4156;
+  border-radius: 0.75rem;
 }
 
 .color-blue {
@@ -71,6 +76,7 @@
   }
 }
 
-/* Additional responsive design considerations as needed */
 
-  
+
+
+/* Additional responsive design considerations as needed */

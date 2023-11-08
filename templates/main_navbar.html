@@ -1,4 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3f4156;">
+<nav
+  class="navbar navbar-expand-lg navbar-dark"
+  style="background-color: #3f4156"
+>
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'employee-home' request.user %}"
       >UpSkill</a
@@ -25,9 +28,8 @@
             >Home</a
           >
         </li>
-        
-        {% with request.resolver_match.url_name as url_name %}
-        {% if courses %}
+
+        {% with request.resolver_match.url_name as url_name %} {% if courses %}
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -56,8 +58,7 @@
             {% endfor %}
           </ul>
         </li>
-        {% endif %}
-        {% endwith %}
+        {% endif %} {% endwith %}
       </ul>
       {% endif %}
       <div>
