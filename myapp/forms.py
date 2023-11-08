@@ -4,6 +4,8 @@ from django.forms import ModelForm
 from .models import User
 
 # login form
+
+
 class LoginForm(forms.Form):
     """
     Form for user login.
@@ -14,8 +16,8 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "id":"username",
-                "autocomplete":"username",
+                "id": "username",
+                "autocomplete": "username",
                 "placeholder": "Enter your username",
             }
         )
@@ -24,8 +26,8 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 "class": "form-control",
-                "id":"passwordField",
-                "autocomplete":"password",
+                "id": "passwordField",
+                "autocomplete": "password",
                 "placeholder": "Enter your password",
             }
         )
@@ -43,12 +45,12 @@ class EmployeeSignUpForm(UserCreationForm):
     # Create a modelchoicefield to display only employers
     employer_select = forms.ModelChoiceField(
         queryset=User.objects.filter(is_employer=True), widget=forms.Select(attrs={'class': 'form-select'}))
-
+    
     first_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "autocomplete":"first_name",
+                "autocomplete": "first_name",
             }
         )
     )
@@ -57,7 +59,7 @@ class EmployeeSignUpForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "autocomplete":"last_name",
+                "autocomplete": "last_name",
             }
         )
     )
@@ -66,7 +68,7 @@ class EmployeeSignUpForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "autocomplete":"username",
+                "autocomplete": "username",
             }
         )
     )
@@ -74,7 +76,7 @@ class EmployeeSignUpForm(UserCreationForm):
         widget=forms.PasswordInput(
             attrs={
                 "class": "form-control",
-                "id":"passwordField1"
+                "id": "passwordField1"
             }
         )
     )
@@ -82,7 +84,7 @@ class EmployeeSignUpForm(UserCreationForm):
         widget=forms.PasswordInput(
             attrs={
                 "class": "form-control",
-                "id":"passwordField2"
+                "id": "passwordField2"
             }
         )
     )
@@ -90,7 +92,7 @@ class EmployeeSignUpForm(UserCreationForm):
         widget=forms.EmailInput(
             attrs={
                 "class": "form-control",
-                "autocomplete":"email",
+                "autocomplete": "email",
             }
         )
     )
@@ -135,7 +137,7 @@ class EmployerSignUpForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "autocomplete":"first_name",
+                "autocomplete": "first_name",
                 'id': 'floatingfirst_name',
             }
         )
@@ -145,7 +147,7 @@ class EmployerSignUpForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "autocomplete":"last_name",
+                "autocomplete": "last_name",
             }
         )
     )
@@ -154,7 +156,7 @@ class EmployerSignUpForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "autocomplete":"username",
+                "autocomplete": "username",
             }
         )
     )
@@ -162,7 +164,7 @@ class EmployerSignUpForm(UserCreationForm):
         widget=forms.PasswordInput(
             attrs={
                 "class": "form-control",
-                "id":"passwordField1"
+                "id": "passwordField1"
             }
         )
     )
@@ -170,7 +172,7 @@ class EmployerSignUpForm(UserCreationForm):
         widget=forms.PasswordInput(
             attrs={
                 "class": "form-control",
-                "id":"passwordField2"
+                "id": "passwordField2"
             }
         )
     )
@@ -178,7 +180,7 @@ class EmployerSignUpForm(UserCreationForm):
         widget=forms.EmailInput(
             attrs={
                 "class": "form-control",
-                "autocomplete":"email",
+                "autocomplete": "email",
             }
         )
     )
@@ -230,7 +232,8 @@ class UserForm(ModelForm):
         required=False
     )
 
-    avatar = forms.ImageField(widget=forms.ClearableFileInput(attrs={'accept': 'image/*'}))
+    avatar = forms.ImageField(
+        widget=forms.ClearableFileInput(attrs={'accept': 'image/*'}))
 
     class Meta:
         model = User
@@ -238,4 +241,4 @@ class UserForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')  # Retrieve the 'user' argument from kwargs
-        super().__init__(*args, **kwargs)      
+        super().__init__(*args, **kwargs)

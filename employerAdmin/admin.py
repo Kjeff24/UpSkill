@@ -18,7 +18,7 @@ class UserAdmin(admin.ModelAdmin):
         # Filter queryset to show only the courses created by the logged-in employer
         qs = super().get_queryset(request)
         if request.user.is_employer:
-            return qs.filter(my_employer=request.user)
+            return qs.filter(my_employer=request.user) | qs.filter(id=request.user.id)
         else:
             return qs
     

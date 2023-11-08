@@ -76,7 +76,7 @@ class Question(models.Model):
     """
     Model representing a question in a quiz.
     """
-    text = models.CharField(max_length=200)
+    text = models.CharField(unique=True, max_length=200)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 

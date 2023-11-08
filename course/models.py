@@ -18,7 +18,7 @@ class Course(models.Model):
     """
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+    instructor = models.ForeignKey(User, on_delete=models.CASCADE,db_constraint=False)
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 

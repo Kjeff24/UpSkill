@@ -75,7 +75,9 @@
                                 <i class="fas fa-users fa-2x me-1 fa-fw icon-logo"></i>
                                 <div class="form-floating flex-fill">
                                     <!-- input  -->
+                                    {% if form.employer_select %}
                                     {{ form.employer_select}}
+                                    {% endif %}
                                     <label for="floatingInput">Employers</label>
                                 </div>
                             </div>
