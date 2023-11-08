@@ -1,8 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3f4156;">
+{% load static %}
+{% load i18n %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'employee-home' request.user %}"
-      >SkillBuilder</a
-    >
+    <a class="navbar-brand" href="{% url 'employee-home' request.user %}">UpSkill</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -16,87 +17,71 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       {% if request.user.is_authenticated %}
-      <ul class="navbar-nav m-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a
-            class="nav-link {% if request.resolver_match.view_name == 'employee-home' %} active {% endif %}"
-            aria-current="page"
-            href="{% url 'employee-home' request.user %}"
-            >Home</a
-          >
-        </li>
-        
-        {% with request.resolver_match.url_name as url_name %}
-        {% if courses %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a
+              class="nav-link {% if request.resolver_match.view_name == 'employee-home' %}active{% endif %}"
+              aria-current="page"
+              href="{% url 'employee-home' request.user %}"
+            >Home</a>
+          </li>
+          
+          {% if courses %}
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="coursesDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Courses
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="coursesDropdown">
+                {% for course in courses %}
+                  <li>
+                    <a
+                      class="dropdown-item {% if course.id == request.resolver_match.kwargs.pk|stringformat:'s' %}active{% endif %}"
+                      href="{% url 'course' course.id %}"
+                    >
+                      {{ course }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+        </ul>
+      {% endif %}
+      <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
             href="#"
-            id="navbarDarkDropdownMenuLink"
+            id="userDropdown"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Courses
+            <img
+              src="{{ request.user.avatar.url }}"
+              alt="User avatar"
+              class="rounded-circle"
+              style="width: 30px; height: 30px; object-fit: cover;"
+            />
+            {{ request.user.username }}
           </a>
-          <ul
-            class="dropdown-menu"
-            aria-labelledby="navbarDarkDropdownMenuLink"
-            id="courseList"
-          >
-            {% for course in courses %}
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <li>
-              <a
-                class="dropdown-item {% if course.id|stringformat:'s' == request.resolver_match.kwargs.pk %}active{% endif %}"
-                href="{% url 'course' course.id %}"
-              >
-                {{course}}
-              </a>
+              <a class="dropdown-item" href="{% url 'update-user' request.user.id %}">Profile</a>
             </li>
-            {% endfor %}
+            <li>
+              <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+            </li>
           </ul>
         </li>
-        {% endif %}
-        {% endwith %}
       </ul>
-      {% endif %}
-      <div>
-        <ul class="navbar-nav">
-          <li class="nav-item dropstart">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDarkDropdownMenuLink"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="{{request.user.avatar.url}}"
-                alt="user"
-                class="image-icon"
-                style="width: 30px; border-radius: 50%"
-              />
-              {{request.user.username}}
-            </a>
-            <ul
-              class="dropdown-menu"
-              aria-labelledby="navbarDarkDropdownMenuLink"
-            >
-              <li>
-                <a
-                  class="dropdown-item"
-                  href="{% url 'update-user' request.user.id %}"
-                  >Profile</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
     </div>
   </div>
 </nav>

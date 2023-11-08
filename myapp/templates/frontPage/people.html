@@ -1,27 +1,30 @@
 {% load static %} 
-{% load i18n %} 
-<div class="p-3 rounded-3 m-3" style="background-color: #3f4156" ;>
-  <h1 class="color-blue text-center">
-    {% translate "Building better learning experiences with SkillBuilder" %}
+{% load i18n %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<div class="rounded-section text-center">
+  <h1 class="color-blue">
+    Building better learning experiences with UpSkill
   </h1>
-  <p class="color-light text-center">
-    {% translate "Read inspiring stories from around the world on how SkillBuilder is being used to manage online learning and improve learner outcomes." %}
+  <p class="color-light">
+    Read inspiring stories from around the world on how UpSkill is being used to manage online learning and improve learner outcomes.
   </p>
-  <div class="text-center">
+  <div class="image-container">
     <img
       src="{% static 'assets/card-img-1.jpg' %}"
-      alt="splash"
-      class="img-fluid people p-1"
+      alt="{% translate 'UpSkill in action' %}"
+      class="img-fluid rounded-image"
     />
     <img
       src="{% static 'assets/card-img-2.jpg' %}"
-      alt="splash"
-      class="img-fluid people p-1"
+      alt="{% translate 'UpSkill team collaboration' %}"
+      class="img-fluid rounded-image"
     />
     <img
       src="{% static 'assets/card-img-3.jpg' %}"
-      alt="splash"
-      class="img-fluid people p-1"
+      alt="{% translate 'UpSkill workshop session' %}"
+      class="img-fluid rounded-image"
     />
   </div>
 </div>

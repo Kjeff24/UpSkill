@@ -43,9 +43,9 @@ class Resource(models.Model):
         ('link', 'link'),
     )
     
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    description = models.TextField(max_length=50, blank=True)
+    description = models.TextField(blank=True)
     file_type = models.CharField(max_length=10, choices=FILE_TYPES, default="null")
     youtubeLink = models.TextField(blank=True)
     file = models.FileField(upload_to='resources/', blank=True)
