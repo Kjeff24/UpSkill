@@ -5,16 +5,16 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 
-<div class="container-fluid p-0">
-  <div class="content-section">
-    <div class="text-section">
-      <h2 class="color-blue">
+<div class="container-fluid p-0 mt-4">
+  <div class="content-section bg-white">
+    <div class="text-section ">
+      <h2 class="color-blue text-success">
         UpSkill is one of the world's largest employee training platform
       </h2>
-      <p>
+      <p class="text-dark mt-3">
         We leverage open-source software to deliver a highly effective, customized, and engaging learning experience.
       </p>
-      <h2 class="color-blue">
+      <h2 class="color-blue text-dark fs-4">
         With our extensive experience, we are confident that we can be your ideal eLearning partner.
       </h2>
       <p class="title-info">
@@ -34,11 +34,11 @@
   {% include 'frontPage/people.html' %}
 
   <div class="call-to-action">
-    <p class="text-center text-white">
+    <p class="text-center text-dark">
       Open LMS provides world-class LMS solutions that empower organizations to meet education and workplace learning needs. Get in touch to find out more.
     </p>
     <div class="text-center">
-      <a class="btn btn-secondary" href="{% url 'contact' %}">
+      <a class="btn btn-success" href="{% url 'contact' %}">
         Get In Touch With Us
       </a>
     </div>
