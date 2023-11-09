@@ -52,7 +52,7 @@
                     name="course"
                     id="course-select"
                   >
-                    {% for course in employer_courses %}
+                    {% for course in all_courses %}
                     <option value="{{course}}">{{course}}</option>
                     {% endfor %}
                   </select>
@@ -87,7 +87,7 @@
           <div class="col-1-content">
             <h1 class="fs-3"  style="color: #71c6dd;">Welcome to SkillBuilder</h1>
             <p class="text-justify">
-              Welcome to Skillbuilder, the online employee training app designed
+              Welcome to Skillbuilder, the online training app designed
               to help your workforce develop the skills they need to succeed.
               Our platform provides a comprehensive suite of training courses
               that cover a wide range of topics, from technical skills to soft
@@ -136,7 +136,7 @@
             </ul>
             <p class="text-justify">
               In addition to our training courses, we offer a range of features
-              to help you manage your training program and track your employees'
+              to help you manage your training program and track your learning'
               progress. Our platform includes
             </p>
             <ul>

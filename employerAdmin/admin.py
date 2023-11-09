@@ -3,22 +3,22 @@ from django.db.models import Max
 from random import randint
 from django.utils.safestring import mark_safe
 from django.contrib.admin import register
-from employerAdmin.employer_admin import employer_admin_site
+from employerAdmin.employer_admin import tutor_admin_site
 from quiz.models import Quiz, Question, Answer, Result
 from course.models import *
 from event.models import *
 from myapp.models import User
 
 
-@register(User, site=employer_admin_site)
+@register(User, site=tutor_admin_site)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'is_email_verified', 'last_login')
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
-            return qs.filter(my_employer=request.user) | qs.filter(id=request.user.id)
+        if request.user.is_tutor:
+            return qs.filter(id=request.user.id)
         else:
             return qs
     
@@ -38,23 +38,23 @@ class ParticipantsInline(admin.TabularInline):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         # Filter the users and rooms displayed in the user and room fields to show only those created by the logged-in admin
         if db_field.name == 'user':
-            kwargs['queryset'] = User.objects.filter(my_employer=request.user)
+            kwargs['queryset'] = User.objects.filter(course__instructor=request.user)
         elif db_field.name == 'room':
             kwargs['queryset'] = Room.objects.filter(course__instructor=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 
-@register(Course, site=employer_admin_site)
+@register(Course, site=tutor_admin_site)
 class CourseAdmin(admin.ModelAdmin):
     inlines = [ParticipantsInline]
     # Customize the fields displayed in the admin list view for courses
     list_display = ('name', 'instructor', 'created', 'updated')
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
+        if request.user.is_tutor:
             return qs.filter(instructor=request.user)
         else:
             return qs
@@ -72,15 +72,15 @@ class CourseAdmin(admin.ModelAdmin):
         return form
     
     
-@register(Participants, site=employer_admin_site)
+@register(Participants, site=tutor_admin_site)
 class ParticipantsAdmin(admin.ModelAdmin):
     # Customize the fields displayed in the admin list view for participants
     list_display = ('user', 'course')
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
+        if request.user.is_tutor:
             return qs.filter(course__instructor=request.user)
         else:
             return qs
@@ -91,18 +91,18 @@ class ParticipantsAdmin(admin.ModelAdmin):
         elif db_field.name == "room":
             kwargs["queryset"] = Room.objects.filter(course__instructor=request.user)
         elif db_field.name == "user":
-            kwargs["queryset"] = User.objects.filter(my_employer=request.user)
+            kwargs["queryset"] = User.objects.filter(course__instructor=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-@register(Resource, site=employer_admin_site)
+@register(Resource, site=tutor_admin_site)
 class ResourceAdmin(admin.ModelAdmin):
     # Customize the fields displayed in the admin list view for resources
     list_display = ('name', 'course', 'created', 'updated')
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
+        if request.user.is_tutor:
             return qs.filter(course__instructor=request.user)
         else:
             return qs
@@ -112,15 +112,15 @@ class ResourceAdmin(admin.ModelAdmin):
             kwargs["queryset"] = Course.objects.filter(instructor=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-@register(Announcement, site=employer_admin_site)
+@register(Announcement, site=tutor_admin_site)
 class AnnouncementAdmin(admin.ModelAdmin):
     # Customize the fields displayed in the admin list view for announcements
     list_display = ('title', 'course', 'date', 'created', 'updated')
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
+        if request.user.is_tutor:
             return qs.filter(course__instructor=request.user)
         else:
             return qs
@@ -130,15 +130,15 @@ class AnnouncementAdmin(admin.ModelAdmin):
             kwargs["queryset"] = Course.objects.filter(instructor=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-@register(Room, site=employer_admin_site)
+@register(Room, site=tutor_admin_site)
 class RoomAdmin(admin.ModelAdmin):
     # Customize the fields displayed in the admin list view for rooms
     list_display = ('room_topic', 'course', 'created', 'updated')
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
+        if request.user.is_tutor:
             return qs.filter(course__instructor=request.user)
         else:
             return qs
@@ -151,15 +151,15 @@ class RoomAdmin(admin.ModelAdmin):
 
 # Quiz 
 
-@register(Quiz, site=employer_admin_site)
+@register(Quiz, site=tutor_admin_site)
 class QuizAdmin(admin.ModelAdmin):
     # Customize the fields displayed in the admin list view for quizzes
     list_display = ('name', 'course', 'number_of_questions', 'time', 'required_score_to_pass', 'difficluty')
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
+        if request.user.is_tutor:
             return qs.filter(course__instructor=request.user)
         else:
             return qs
@@ -177,7 +177,7 @@ class AnswerInline(admin.TabularInline):
     """
     model = Answer
 
-@register(Question, site=employer_admin_site)
+@register(Question, site=tutor_admin_site)
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
     # Customize the fields displayed in the admin list view for questions
@@ -186,9 +186,9 @@ class QuestionAdmin(admin.ModelAdmin):
     change_list_template = 'admin/question_change_list.html'
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
+        if request.user.is_tutor:
             return qs.filter(quiz__course__instructor=request.user)
         else:
             return qs
@@ -208,7 +208,7 @@ class QuestionAdmin(admin.ModelAdmin):
         return response
 
 
-@register(Result, site=employer_admin_site)
+@register(Result, site=tutor_admin_site)
 class ResultAdmin(admin.ModelAdmin):
     list_display = ('user', 'quiz', 'score', 'quiz_highest_score', 'passed', 'completion_time', 'created')
     
@@ -310,9 +310,9 @@ class ResultAdmin(admin.ModelAdmin):
         return response
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
+        if request.user.is_tutor:
             return qs.filter(quiz__course__instructor=request.user)
         else:
             return qs
@@ -321,18 +321,18 @@ class ResultAdmin(admin.ModelAdmin):
         if db_field.name == "quiz":
             kwargs["queryset"] = Quiz.objects.filter(course__instructor=request.user)
         elif db_field.name == "user":
-            kwargs["queryset"] = User.objects.filter(my_employer=request.user) 
+            kwargs["queryset"] = User.objects.filter(course__instructor=request.user) 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
             
 
-@register(Event, site=employer_admin_site)
+@register(Event, site=tutor_admin_site)
 class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'course', 'start', 'end')
     
     def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in employer
+        # Filter queryset to show only the courses created by the logged-in tutor
         qs = super().get_queryset(request)
-        if request.user.is_employer:
+        if request.user.is_tutor:
             return qs.filter(course__instructor=request.user)
         else:
             return qs

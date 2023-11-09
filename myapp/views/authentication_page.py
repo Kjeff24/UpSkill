@@ -11,7 +11,7 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from myapp.tokens import account_activation_token
 from myapp.models import User
-from myapp.forms import LoginForm, EmployerSignUpForm, EmployeeSignUpForm
+from myapp.forms import LoginForm, TutorSignUpForm, LearnerSignUpForm
 
 
 def loginPage(request):
@@ -27,7 +27,7 @@ def loginPage(request):
     
     if request.user.is_authenticated:
         # User is already logged in
-        return redirect('employee-home', request.user)  # Redirect to the dashboard page or any other desired page
+        return redirect('learner-home', request.user)  # Redirect to the dashboard page or any other desired page
     
     form = LoginForm(request.POST or None)
     
@@ -38,10 +38,10 @@ def loginPage(request):
             user = authenticate(username=username, password=password)
             
             if user is not None:
-                if user.is_employee and user.is_email_verified:
+                if user.is_learner and user.is_email_verified:
                     login(request, user)
-                    return redirect('employee-home', pk=request.user)
-                elif user.is_employee and not user.is_email_verified:
+                    return redirect('learner-home', pk=request.user)
+                elif user.is_learner and not user.is_email_verified:
                     messages.add_message(request, messages.ERROR,
                                         'Your email is not verified.')
                 else:
@@ -74,41 +74,43 @@ def logoutUser(request):
     return redirect('login')
 
 
-# Employee signup
-def employeeSignupPage(request):
+# Leaner signup
+def learnerSignupPage(request):
     """
-    View function to handle employee signup.
+    View function to handle learner signup.
 
     Args:
         request: The HTTP request object.
 
     Returns:
-        A rendered HTML template for the employee signup page.
+        A rendered HTML template for the learner signup page.
     """
     if request.method == 'POST':
-        form = EmployeeSignUpForm(request.POST)
+        form = LearnerSignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            send_activation_email(user, request)
+            user.is_email_verified = True
+            user.save()
+            # send_activation_email(user, request)
             messages.add_message(request, messages.SUCCESS,
-                                         'We sent you an email to verify your account')
+                                         'You can login now')
             return redirect('login')
         else:
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f"{error}")
     else:
-        form = EmployeeSignUpForm()
+        form = LearnerSignUpForm()
 
     context = {'form': form}
 
-    return render(request, "authenticate/employee_signup.html", context)
+    return render(request, "authenticate/learner_signup.html", context)
 
 
 # Employer Signup
-def employerSignupPage(request):
+def tutorSignupPage(request):
     """
-    View function to handle employer signup.
+    View function to handle tutor signup.
 
     Args:
         request: The HTTP request object.
@@ -117,7 +119,7 @@ def employerSignupPage(request):
         A rendered HTML template for the employer signup page.
     """
     if request.method == 'POST':
-        form = EmployerSignUpForm(request.POST)
+        form = TutorSignUpForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_staff = True  # Assign staff status
@@ -125,18 +127,18 @@ def employerSignupPage(request):
             user.save()
             # send_activation_email(user, request)
             messages.add_message(request, messages.SUCCESS,
-                                         'We sent you an email to verify your account')
-            return redirect('employer_admin:login')
+                                         'You can login now')
+            return redirect('tutor_admin:login')
         else:
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f"{error}")
     else:
-        form = EmployerSignUpForm()
+        form = TutorSignUpForm()
 
     context = {'form': form}
 
-    return render(request, "authenticate/employer_signup.html", context)
+    return render(request, "authenticate/tutor_signup.html", context)
 
 # sends activation code to the email
 def send_activation_email(user, request):
@@ -201,7 +203,7 @@ def activate_user(request, uidb64, token):
 
         messages.add_message(request, messages.SUCCESS,
                              'Email verified, you can now login')
-        if user.is_employee:
+        if user.is_learner:
             return redirect(reverse('login'))
         return redirect(reverse('employer_admin:login'))
 

@@ -8,31 +8,29 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 
-# Employee home
+# learner home
 @login_required(login_url='login')
-def employeeHome(request, pk):
+def learnerHome(request, pk):
     """
-    View function for the employee home page.
+    View function for the learner home page.
 
     Args:
         request: The HTTP request object.
         pk: The primary key of the user.
 
     Returns:
-        A rendered HTML template for the employee home page, which includes the enrollment form
+        A rendered HTML template for the learner home page, which includes the enrollment form
         and a list of available courses. If a course is selected for enrollment, the user is
         enrolled in the course and appropriate success messages are displayed.
     """
-    employee = request.user
+    learner = request.user
     try:
-        employer = User.objects.get(username=employee.my_employer)
-
-        employer_courses = Course.objects.filter(instructor__username=employer).distinct()
+        all_courses = Course.objects.all()
         
-        participants = Participants.objects.filter(user=employee)
+        participants = Participants.objects.filter(user=learner)
         courses = [participant.course for participant in participants]
 
-        context = {'courses': courses, 'employer_courses': employer_courses}
+        context = {'courses': courses, 'all_courses': all_courses}
 
         if request.method == 'POST':
             course_selected = request.POST.get('course')
@@ -44,13 +42,13 @@ def employeeHome(request, pk):
 
             if enrollment.filter(user=user).exists():
                 messages.success(request, 'You have already enrolled.')
-                return redirect('employee-home', pk=request.user)
+                return redirect('learner-home', pk=request.user)
             else:
                 participant = Participants.objects.create(user=user, course=course)
                 messages.success(request, 'Enrollment successful.')
                 return redirect('enrollment-success')
         
-        return render(request, "usersPage/employee_home.html", context)
+        return render(request, "usersPage/learner_home.html", context)
     
     except ObjectDoesNotExist:
         return HttpResponse("You are not authorized")
@@ -68,6 +66,6 @@ def enrollmentSuccess(request):
     """
     if request.method == 'POST':
         messages.success(request, 'You have already enrolled.')
-        return redirect('employee-home', pk=request.user)
+        return redirect('learner-home', pk=request.user)
     
     return render(request, "usersPage/enrollment_success.html")
