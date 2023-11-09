@@ -6,48 +6,52 @@
 {% endblock scripts %}
 
 {% block title %}
-home
+Home
 {% endblock title %}
 
 {% block content %}
-
-<!-- Modal -->
-<div class="modal fade" id="quizStartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Start?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="modal-body-confirm"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">no</button>
-        <button type="button" id="start-button" data-dismiss="modal" class="btn btn-success">yes</button>
-      </div>
+<div class="container mt-5">
+    <!-- Modal -->
+    <div class="modal fade" id="quizStartModal" tabindex="-1" aria-labelledby="quizStartModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quizStartModalLabel">Ready to start the quiz?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body-confirm">
+                    <!-- Modal body content will be populated here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" id="start-button" data-bs-dismiss="modal" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<div class="h1">Quiz List</div>
-<hr>
-{% if quizzes %}
-{% for obj in quizzes %}
-    <button
-        class="btn btn-link modal-button"
-        data-pk="{{obj.pk}}"
-        data-quiz="{{obj.name}}"
-        data-questions="{{obj.number_of_questions}}"
-        data-difficulty="{{obj.difficluty}}"
-        data-time="{{obj.time}}"
-        data-pass = "{{obj.required_score_to_pass}}"
-        data-toggle="modal"
-        data-target="#quizStartModal">
-        {{obj.name}}
-    </button><br>
-{% endfor %}
-{% else %}
-<h3>There are no quizzes available</h3>
-{% endif %}
+    <h1 class="mb-4">Quiz List</h1>
+    <hr>
+    {% if quizzes %}
+        <div class="list-group">
+            {% for obj in quizzes %}
+                <button
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center modal-button"
+                    data-pk="{{ obj.pk }}"
+                    data-quiz="{{ obj.name }}"
+                    data-questions="{{ obj.number_of_questions }}"
+                    data-difficulty="{{ obj.difficulty }}"
+                    data-time="{{ obj.time }}"
+                    data-pass="{{ obj.required_score_to_pass }}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#quizStartModal">
+                    {{ obj.name }}
+                    <span class="badge bg-primary rounded-pill">{{ obj.number_of_questions }} Questions</span>
+                </button>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3 class="text-center">There are no quizzes available at the moment.</h3>
+    {% endif %}
+</div>
 {% endblock content %}
