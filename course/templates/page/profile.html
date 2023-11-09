@@ -1,59 +1,52 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="{% static 'css/bootstrap.min.css' %}"
-        />
-        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/profile.css' %}"/>
-        <title>Profile</title>
-    </head>
-    <body>
-        <div class="container mt-5">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-7">
-                    <div class="card p-3 py-4">
-                        <div class="text-center">
-                            <img
-                                src="{{user_profile.avatar.url}}"
-                                width="100"
-                                class="rounded-circle"
-                            />
-                        </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/profile.css' %}"/>
+    <title>Profile</title>
+    <style>
+        /* Additional styles for light green theme */
+        .bg-light-green {
+            background-color: #e2f3e4; /* Light green background */
+        }
+        .text-light-green {
+            color: #32CD32; /* Light green text color */
+        }
+        /* Override Bootstrap's rounded-circle class to include a green border */
+        .rounded-circle {
+            border: 3px solid #32CD32; /* Light green border */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-7">
+                <div class="card p-3 py-4 bg-light-green">
+                    <div class="text-center">
+                        <img
+                            src="{{ user_profile.avatar.url }}"
+                            width="100"
+                            class="rounded-circle"
+                            alt="Profile Avatar"  
+                        />
+                    </div>
 
-                        <div class="text-center mt-3">
-                            <span
-                                class="profile-name p-1 px-4 rounded text-white fw-bold text-uppercase"
-                                >{{user_profile.first_name}} {{user_profile.last_name}}</span
-                            >
-                            <br>
-                            <span>Company: {{user_profile.my_employer}}</span>
+                    <div class="text-center mt-3">
+                        <h2 class="profile-name p-1 px-4 rounded text-white fw-bold text-uppercase bg-success">{{ user_profile.first_name }} {{ user_profile.last_name }}</h2>
+                        <h5 class="mt-2 text-light-green">Company: {{ user_profile.my_employer }}</h5>
 
-                            <div class="px-4 mt-1">
-                                {% if user_profile.bio %}
-                                <p class="fonts">{{user_profile.bio}}</p>
-                                {% else %}
-                                <p class="fonts">No user bio</p>
-                                {% endif %}
-                            </div>
-                            <!-- <div class="buttons">
-                                <button class="btn btn-outline-primary px-4">
-                                    Message
-                                </button>
-                                <button class="btn btn-primary px-4 ms-3">
-                                    Contact
-                                </button>
-                            </div> -->
+                        <div class="px-4 mt-1">
+                            <p class="fonts">{{ user_profile.bio|default:"No user bio" }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-    </body>
+    </div>
+</body>
 </html>
