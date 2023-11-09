@@ -76,7 +76,7 @@
                 src="{{request.user.avatar.url}}"
                 alt="user"
                 class="image-icon"
-                style="width: 30px; border-radius: 50%"
+                style="width: 30px; border-radius: 50%; "
               />
               {{request.user.username}}
             </a>
@@ -85,11 +85,10 @@
               aria-labelledby="navbarDarkDropdownMenuLink"
             >
               <li>
-                <a
-                  class="dropdown-item"
-                  href="{% url 'update-user' request.user.id %}"
-                  >Profile</a
-                >
+                <a class="dropdown-item" style="padding-right: 9rem;"
+                href="{% url 'update-user' request.user.id %}"
+                >Profile
+                </a>
               </li>
               <li>
                 <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
