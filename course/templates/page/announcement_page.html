@@ -1,63 +1,46 @@
-{% extends 'main.html' %} {% load static %} | {% block content %}
-<div>
-    <h1>Announcements</h1>
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-success">Announcements</h1>
     {% if announcements %}
     
-    <table class="table table-hover table-striped">
-        <tr class="announcement-header">
-            <th>Subject</th>
-            <th>Saved By</th>
-            <th>Creation Time</th>
-            <th>Last Modified Time</th>
-            
-        </tr>
-        {% for announcement in announcements %}
-        <tr>
-            <td class="view announcement-view"> <a>
-                {% if announcement.title %}
-                {{announcement.title}}
-                {% else %}
-                N/A
-                {% endif %}
-            </a>
-            </td>
-            <td>
-                {% if course.instructor %}
-                <p>{{course.instructor}}</p>
-                {% else %}
-                <p>N/A</p>
-                {% endif %}
-            </td>
-            <td>
-                {% if announcement.created|timesince %}
-                <p>{{announcement.created|timesince}}</p>
-                {% else %}
-                <p>N/A</p>
-                {% endif %}
-            </td>
-            <td>
-                {% if announcement.updated|timesince %}
-                <p>{{announcement.updated|timesince}}</p>
-                {% else %}
-                <p>N/A</p>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <div class="view-details">
-                    <h4>Message: </h4>
-                    <br>
-                    <p>{{announcement.content}}</p>
-                    <hr>
-                </div>
-                <br>
-            </tr>
-            </td>
-        {% endfor %}
-    </table>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="text-white bg-success">
+                <tr>
+                    <th>Subject</th>
+                    <th>Saved By</th>
+                    <th>Creation Time</th>
+                    <th>Last Modified Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for announcement in announcements %}
+                <tr>
+                    <td class="fw-bold">{{ announcement.title|default:"N/A" }}</td>
+                    <td>{{ course.instructor|default:"N/A" }}</td>
+                    <td>{{ announcement.created|date:"M d, Y H:i"|default:"N/A" }}</td>
+                    <td>{{ announcement.updated|date:"M d, Y H:i"|default:"N/A" }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="bg-light">
+                        <div class="p-3">
+                            <h5 class="text-success">Message:</h5>
+                            <p>{{ announcement.content|default:"No details provided." }}</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
     {% else %}
-    <p>Annoucement not available</p>
+    <div class="alert alert-warning" role="alert">
+        No announcements are currently available.
+    </div>
     {% endif %}
 </div>
 {% endblock %}
