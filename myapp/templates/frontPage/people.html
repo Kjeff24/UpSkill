@@ -2,6 +2,25 @@
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
+<!-- just added -->
+
+<style>
+
+.card {
+  overflow: hidden;
+    cursor: pointer;
+     transition: all 0.5s;
+
+}
+  
+  .card:hover{
+  transform: scale(1.05);
+  z-index: 999;
+}
+</style>
+
+
+
 <div class="rounded-section text-center bg-white">
   <h1 class="color-blue text-success">
     Building better learning experiences with UpSkill
@@ -10,9 +29,9 @@
     Read inspiring stories from around the world on how UpSkill is being used to
     manage online learning and improve learner outcomes.
   </p>
-  <div class="image-container container mt-4">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-      <div class="col">
+  <div class="image-container  mt-4">
+    <div class="owl-carousel" >
+      <div class="px-1">
         <div class="card">
           <img
             src="{% static 'assets/card-img-1.jpg' %}"
@@ -22,13 +41,14 @@
           />
           <div class="card-body">
             <p class="card-text">
+               <i class="bi bi-quote text-muted fs-4"></i>
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="px-1">
         <div class="card">
           <img
             src="{% static 'assets/card-img-2.jpg' %}"
@@ -38,13 +58,14 @@
           />
           <div class="card-body">
             <p class="card-text">
+              <i class="bi bi-quote text-muted fs-4"></i>
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="px-1">
         <div class="card">
           <img
             src="{% static 'assets/card-img-3.jpg' %}"
@@ -54,13 +75,14 @@
           />
           <div class="card-body">
             <p class="card-text">
+               <i class="bi bi-quote text-muted fs-4"></i>
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="px-1">
         <div class="card">
           <img
             src="{% static 'assets/card-img-1.jpg' %}"
@@ -70,13 +92,14 @@
           />
           <div class="card-body">
             <p class="card-text">
+               <i class="bi bi-quote text-muted fs-4"></i>
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="px-1">
         <div class="card">
           <img
             src="{% static 'assets/card-img-1.jpg' %}"
@@ -86,6 +109,7 @@
           />
           <div class="card-body">
             <p class="card-text">
+               <i class="bi bi-quote text-muted fs-4"></i>
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p>
@@ -95,3 +119,7 @@
     </div>
   </div>
 </div>
+
+
+<!--Just added-->
+
