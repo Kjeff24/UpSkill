@@ -3,7 +3,7 @@
   style="background-color: #3f4156"
 >
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'employee-home' request.user %}"
+    <a class="navbar-brand" href="{% url 'learner-home' request.user %}"
       >UpSkill</a
     >
     <button
@@ -22,9 +22,9 @@
       <ul class="navbar-nav m-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a
-            class="nav-link {% if request.resolver_match.view_name == 'employee-home' %} active {% endif %}"
+            class="nav-link {% if request.resolver_match.view_name == 'learner-home' %} active {% endif %}"
             aria-current="page"
-            href="{% url 'employee-home' request.user %}"
+            href="{% url 'learner-home' request.user %}"
             >Home</a
           >
         </li>

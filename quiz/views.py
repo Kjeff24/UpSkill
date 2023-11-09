@@ -20,9 +20,9 @@ def quiz_list_view(request, pk2):
     Returns:
         A rendered HTML template displaying the quizzes for the course.
     """
-    employee = request.user
+    learner = request.user
     course = Course.objects.get(id=pk2)
-    courses = Course.objects.filter(participants__user=employee)
+    courses = Course.objects.filter(participants__user=learner)
     
     # Filter quizzes that the user has not attempted more than quiz_chances times
     quizzes = Quiz.objects.filter(

@@ -10,10 +10,10 @@ urlpatterns = [
     path('contact/', front_page.contact, name='contact'),
     path('login/', authentication_page.loginPage, name='login'),
     path('logout/', authentication_page.logoutUser, name='logout'),
-    path('employee_signup/', authentication_page.employeeSignupPage, name='employee-signup'),
-    path('employer_signup/', authentication_page.employerSignupPage, name='employer-signup'),
+    path('learner_signup/', authentication_page.learnerSignupPage, name='learner-signup'),
+    path('tutor_signup/', authentication_page.tutorSignupPage, name='tutor-signup'),
     path('activate-user/<uidb64>/<token>', authentication_page.activate_user, name='activate'),
-    path('employee_home/<str:pk>/', users_page.employeeHome, name='employee-home'),
+    path('learner_home/<str:pk>/', users_page.learnerHome, name='learner-home'),
     path('enrollment_success/', users_page.enrollmentSuccess, name='enrollment-success'),
     path('update_user/<str:pk>/', user_management.updateUser, name='update-user'),
     

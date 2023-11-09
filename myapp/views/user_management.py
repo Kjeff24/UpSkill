@@ -21,8 +21,6 @@ def updateUser(request, pk):
     """
     user = get_object_or_404(User, pk=pk)
 
-    employers = User.objects.filter(is_employer=True).distinct()
-
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES, instance=user, user=request.user)
         if form.is_valid():
