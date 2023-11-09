@@ -14,7 +14,7 @@
     <title>Employer Login</title>
 </head>
 <body>
-    <section class="vh-100 p-4" style="background-color: white">
+    <section class="vh-100 p-4" style="background-color: #2d2d39;;">
         <div class="container h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-12 col-xl-11">
@@ -23,7 +23,7 @@
                   <div class="row justify-content-center">
                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
       
-                        <p class="text-center fs-2 fs-5 fw-bold mb-3 signup-heading text-success">Login As Employee</p>
+                        <p class="text-center fs-2 fs-5 fw-bold mb-3 signup-heading">Login As Employee</p>
                         {% if messages %}
                         {% for message in messages %}
                             <p class="ui {{message.tags}} message text-center fs-6 fw-bold signup-heading">
@@ -58,11 +58,11 @@
                                     <input type="checkbox" id="showPasswordToggle" />
                                     <!-- <div class="checkmark"></div> -->
                                 </label>
-                                <span class="ms-1">Show Password</span>
+                                <span>Show Password</span>
                             </div>
         
-                            <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-success ">Login</button>
+                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <button type="submit" class="btn btn-register btn-lg">Login</button>
                             </div>
                             <p class="text-center">
                                 Forgot Password ? <a href="{% url 'password_reset' %}" class="signup-employee">Click here</a>
