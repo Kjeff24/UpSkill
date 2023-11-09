@@ -34,18 +34,14 @@ class LoginForm(forms.Form):
     )
 
 
-# Employee signup
-class EmployeeSignUpForm(UserCreationForm):
+# Learner signup
+class LearnerSignUpForm(UserCreationForm):
     """
-    Form for employee sign up.
+    Form for learner sign up.
 
     Inherits from UserCreationForm and adds additional fields such as first name,
-    last name, email, and employer selection.
+    last name, email, and tutor selection.
     """
-    # Create a modelchoicefield to display only employers
-    employer_select = forms.ModelChoiceField(
-        queryset=User.objects.filter(is_employer=True), widget=forms.Select(attrs={'class': 'form-select'}))
-    
     first_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -96,39 +92,19 @@ class EmployeeSignUpForm(UserCreationForm):
             }
         )
     )
-    is_employee = forms.BooleanField(required=True)
+    is_learner = forms.BooleanField(required=True)
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',
-                  'is_employee', 'employer_select')
-
-    # Based on the employer the user select, it it assigned to my_employer field in User model
-    def save(self, commit=True):
-        """
-        Saves the form data and associates the selected employer with the user instance.
-
-        Args:
-            commit (bool, optional): Determines whether to save the user instance immediately to the database. 
-                                    Defaults to True.
-
-        Returns:
-            User: The saved user instance.
-
-        Raises:
-            None
-        """
-        user = super().save(commit=False)
-        user.my_employer = self.cleaned_data['employer_select']
-        if commit:
-            user.save()
-        return user
+                  'is_learner')
 
 
-# Employer Signup
-class EmployerSignUpForm(UserCreationForm):
+
+# tutor Signup
+class TutorSignUpForm(UserCreationForm):
     """
-    Form for employer sign up.
+    Form for tutor sign up.
 
     Inherits from UserCreationForm and adds additional fields such as first name,
     last name, and email.
@@ -184,12 +160,12 @@ class EmployerSignUpForm(UserCreationForm):
             }
         )
     )
-    is_employer = forms.BooleanField(required=True)
+    is_tutor = forms.BooleanField(required=True)
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1',
-                  'password2', 'is_employer')
+                  'password2', 'is_tutor')
 
 
 # User Form

@@ -11,7 +11,7 @@
         href="{% static 'css/bootstrap.min.css' %}"
     />
     <link rel="stylesheet" href="{% static 'css/login.css' %}" />
-    <title>Employer Login</title>
+    <title>Learner Login</title>
 </head>
 <body>
     <section class="vh-100 p-4" style="background-color: white">
@@ -23,7 +23,7 @@
                   <div class="row justify-content-center">
                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
       
-                        <p class="text-center fs-2 fs-5 fw-bold mb-3 signup-heading text-success">Login As Employee</p>
+                        <p class="text-center fs-2 fs-5 fw-bold mb-3 signup-heading text-success">Login As Learner</p>
                         {% if messages %}
                         {% for message in messages %}
                             <p class="ui {{message.tags}} message text-center fs-6 fw-bold signup-heading">
@@ -68,7 +68,7 @@
                                 Forgot Password ? <a href="{% url 'password_reset' %}" class="signup-employee">Click here</a>
                             </p>
                             <p class="text-center">
-                                Don't have an acount ? <a href="{% url 'employee-signup' %}" class="signup-employee">Signup</a>
+                                Don't have an acount ? <a href="{% url 'learner-signup' %}" class="signup-employee">Signup</a>
                             </p>
         
                         </form>

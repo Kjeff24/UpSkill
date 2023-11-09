@@ -51,7 +51,7 @@ function displayMessages() {
             <div class="outgoing-chats">
                 <div class="outgoing-chats-img">
                     <a href="/profile/${message.user_id}">
-                        <img src="${message.avatar}" style="width: 50px; border-radius: 50%; padding: 5px;"/>
+                        <img src="${message.avatar}" style="width: 50px; border-radius: 40%; padding: 5px;"/>
                     </a>
                 </div>
                 <div class="outgoing-msg">
@@ -75,7 +75,7 @@ function displayMessages() {
             <div class="received-chats">
               <div class="received-chats-img">
                   <a href="/profile/${message.user_id}">
-                      <img  src="${message.avatar}" style="width: 50px; border-radius: 50%; padding: 5px;"/>  
+                      <img  src="${message.avatar}" style="width: 50px; border-radius: 40%; padding: 5px;"/>  
                   </a>
               </div>
               <div class="received-msg">

@@ -8,8 +8,8 @@ class MyAdminSite(AdminSite):
     :site_title: The title displayed on the admin site. :noindex:
     :login_template: The template used for the admin login page. :noindex:
     """
-    site_header = 'SkillBuilder Employer Administration'
-    site_title = 'SkillBuilder Employer Administration'
+    site_header = 'UpSkill Tutor Administration'
+    site_title = 'SkillBuilder Tutor Administration'
     login_template = 'admin/login.html'
 
-employer_admin_site = MyAdminSite(name='employer_admin')
+tutor_admin_site = MyAdminSite(name='tutor_admin')
