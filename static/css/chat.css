@@ -38,7 +38,7 @@
 }
 
 .msg-inbox {
-    /* background-image: url("../assets/bg-chat.png"); */
+    background-image: url("../assets/bg-chat.png");
     background-position: center;
     background-color: #2d2d39;
     border: 1px solid #2d2d39;
