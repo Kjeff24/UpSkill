@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-success">Rooms</h1> <!-- Text-success for a green heading -->
+    {% if rooms %}
+        <div class="card border-success mb-3"> <!-- border-success for a green card border -->
+            <div class="card-header bg-success text-white">Available Chat Rooms</div> <!-- bg-success for a green header -->
+            <div class="card-body bg-light text-success"> <!-- bg-light for a light card body and text-success for green text -->
+                <div class="list-group">
+                    {% for room in rooms %}
+                        <a href="{% url 'chat-room' pk2=course.id pk=room.id %}" class="list-group-item list-group-item-action flex-column align-items-start bg-light">
+                            <!-- Additional custom styling can be added here if needed -->
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1 text-success">{{ room.room_topic }}</h5> <!-- text-success for green text -->
+                            </div>
+                            <p class="mb-1">{{ room.room_description }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-light text-success" role="alert"> <!-- alert-light for a light alert with text-success for green text -->
+            No rooms are available.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
