@@ -1,21 +1,78 @@
-{% extends 'main.html' %} {% load static %} | {% block content %}
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
 <h1>Resources</h1>
-<form class="d-flex" action="{% url 'resource' course.id %}" method="GET">
-  <input
-    class="form-control me-2"
-    type="text"
-    placeholder="Search for files..."
-    name="q"
-    aria-label="Search"
-  />
-  <button class="btn btn btn-outline-primary" type="submit">Search</button>
+<form class="d-flex mb-3" action="{% url 'resource' course.id %}" method="GET">
+    <input class="form-control me-2" type="text" placeholder="Search for files..." name="q" aria-label="Search" />
+    <button class="btn btn-outline-primary" type="submit">Search</button>
 </form>
-{% include 'page/resource_pages/pdf.html' %}
-<br />
-{% include 'page/resource_pages/image.html' %}
-<br />
-{% include 'page/resource_pages/audio.html' %}
-<br />
-{% include 'page/resource_pages/video.html' %}
-<br />
-{% include 'page/resource_pages/youtube_link.html' %} {% endblock %}
+
+<div class="accordion" id="resourceAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingPDF">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePDF" aria-expanded="true" aria-controls="collapsePDF">
+                PDF Files
+            </button>
+        </h2>
+        <div id="collapsePDF" class="accordion-collapse collapse show" aria-labelledby="headingPDF" data-bs-parent="#resourceAccordion">
+            <div class="accordion-body">
+                {% include 'page/resource_pages/pdf.html' %}
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingImage">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseImage" aria-expanded="false" aria-controls="collapseImage">
+                Image Files
+            </button>
+        </h2>
+        <div id="collapseImage" class="accordion-collapse collapse" aria-labelledby="headingImage" data-bs-parent="#resourceAccordion">
+            <div class="accordion-body">
+                {% include 'page/resource_pages/image.html' %}
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingAudio">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAudio" aria-expanded="false" aria-controls="collapseAudio">
+                Audio Files
+            </button>
+        </h2>
+        <div id="collapseAudio" class="accordion-collapse collapse" aria-labelledby="headingAudio" data-bs-parent="#resourceAccordion">
+            <div class="accordion-body">
+                {% include 'page/resource_pages/audio.html' %}
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingVideo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVideo" aria-expanded="false" aria-controls="collapseVideo">
+                Video Files
+            </button>
+        </h2>
+        <div id="collapseVideo" class="accordion-collapse collapse" aria-labelledby="headingVideo" data-bs-parent="#resourceAccordion">
+            <div class="accordion-body">
+                {% include 'page/resource_pages/video.html' %}
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingYoutube">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseYoutube" aria-expanded="false" aria-controls="collapseYoutube">
+                YouTube Links
+            </button>
+        </h2>
+        <div id="collapseYoutube" class="accordion-collapse collapse" aria-labelledby="headingYoutube" data-bs-parent="#resourceAccordion">
+            <div class="accordion-body">
+                {% include 'page/resource_pages/youtube_link.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

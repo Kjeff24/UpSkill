@@ -15,19 +15,6 @@
   background-color: #3f4156;
   border-radius: 0.75rem;
 }
-
-.color-blue {
-  /* Your color and text centering */
-}
-
-.color-light {
-  /* Your light color text styling */
-}
-
-.image-container {
-  /* Container to handle the image layout */
-}
-
 .rounded-image {
   border-radius: 50%; /* This will make the image round */
   width: 100px; /* Set a fixed width */
@@ -56,9 +43,7 @@
   border-radius: 0.75rem;
 }
 
-.color-blue {
-  /* your blue color style */
-}
+
 
 .subtitle {
   color: #b2b2b2; /* Assuming color-light-gray is a lighter shade of text */

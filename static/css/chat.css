@@ -38,7 +38,7 @@
 }
 
 .msg-inbox {
-    /* background-image: url("../assets/bg-chat.png"); */
+    background-image: url("../assets/12.jpeg");
     background-position: center;
     background-color: #2d2d39;
     border: 1px solid #2d2d39;
@@ -50,6 +50,8 @@
 
 .chats {
     padding: 30px 15px 0 25px;
+    background-color: #024722b9;
+    background-repeat: repeat-y;
 }
 
 .msg-page {
@@ -173,7 +175,6 @@ p {
 
 /* Styling the avatar */
 .outgoing-chats-img {
-    /* display: inline-block; */
     width: 50px;
     float: right;
     margin-right: 1rem;
