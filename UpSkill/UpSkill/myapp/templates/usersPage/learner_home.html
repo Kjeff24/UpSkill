@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enrollment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .dropstart .dropdown-toggle::before {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body >
+    <div class="overview-container vh-100">
+      <!-- header container -->
+      {% include 'main_navbar.html' %}
+      <div
+        class="d-flex flex-md-row flex-column gap-3 text-white p-3"
+        style="background-color: #2d2d39"
+      >
+        <div class="col-lg-6 p-3">
+          <div class="col-2-content">
+            <h2 class="fs-4" style="color: #71c6dd;">
+              Enrollment Now Open: Register for Our Exclusive Training Program
+            </h2>
+            <p class="text-justify">
+              Join our community of learners by enrolling in our dynamic and
+              engaging training program.
+            </p>
+            <div class="enroll">
+              <form method="post">
+                {% csrf_token %}
+                <div class="form-floating col-lg-6 col-md-12 col-sm-8">
+                  <select
+                    class="form-select"
+                    id="floatingSelect"
+                    aria-label="Floating label select example"
+                    name="course"
+                    id="course-select"
+                  >
+                    {% for course in all_courses %}
+                    <option value="{{course}}">{{course}}</option>
+                    {% endfor %}
+                  </select>
+                  <label for="floatingSelect" style="color: black"
+                    >Enroll Course:</label
+                  >
+                </div>
+                <br />
+                <button type="submit" class="btn-outline-secondary btn-lg">
+                  Submit
+                </button>
+                <div>
+                  {% if messages %}
+                  <ul class="messages list-unstyled mt-2">
+                    {% for message in messages %}
+                    <li
+                      {% if message.tags %}
+                      class="{{ message.tags }}"
+                      {% endif %}
+                    >
+                      {{ message }}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 p-3 overflow-auto" style="max-height: 90vh">
+          <div class="col-1-content">
+            <h1 class="fs-3"  style="color: #71c6dd;">Welcome to Upskill</h1>
+            <p class="text-justify">
+              Welcome to Upskill, the online training app designed
+              to help your workforce develop the skills they need to succeed.
+              Our platform provides a comprehensive suite of training courses
+              that cover a wide range of topics, from technical skills to soft
+              skills and leadership development.
+            </p>
+            <p class="text-justify">
+              Our courses are created by your instructor and delivered in an
+              engaging and interactive format that combines videos, readings,
+              quizzes, and hands-on exercises. With Upskill, you can access
+              high-quality training anytime, anywhere, and on any device.
+            </p>
+            <p class="text-justify">
+              The training courses are designed to help you develop the skills
+              you need to succeed in their roles and advance your careers. Our
+              courses cover topics such as:
+            </p>
+            <ul>
+              <li>
+                <p class="text-justify">
+                  <span class="bullet-title">Technical Skills: </span>
+                  <span
+                    >Programming languages, database management, software
+                    development, and more.</span
+                  >
+                </p>
+              </li>
+              <li>
+                <p class="text-justify">
+                  <span class="bullet-title">Soft Skills: </span>
+                  <span
+                    >Communication, teamwork, problem-solving, and other
+                    essential skills for the modern workplace.</span
+                  >
+                </p>
+              </li>
+              <li>
+                <p class="text-justify">
+                  <span class="bullet-title">Leadership Development: </span>
+                  <span
+                    >Management skills, coaching and mentoring, strategic
+                    thinking, and more.Technical Skills: Programming languages,
+                    database management, software development, and more.</span
+                  >
+                </p>
+              </li>
+            </ul>
+            <p class="text-justify">
+              In addition to our training courses, we offer a range of features
+              to help you manage your training program and track your learning'
+              progress. Our platform includes
+            </p>
+            <ul>
+              <li>
+                <p class="text-justify">
+                  <span class="bullet-title">Course Catalog: </span>
+                  <span
+                    >Browse our course catalog and sign up for new
+                    courses.</span
+                  >
+                </p>
+              </li>
+              <li>
+                <p class="text-justify">
+                  <span class="bullet-title">My Courses: </span>
+                  <span
+                    >View your enrolled courses, track your progress, and view
+                    upcoming deadlines.</span
+                  >
+                </p>
+              </li>
+              <li>
+                <p class="text-justify">
+                  <span class="bullet-title">Resources: </span>
+                  <span
+                    >Access additional resources related to your training, such
+                    as articles, videos, and discussion forums.</span
+                  >
+                </p>
+              </li>
+              <li>
+                <p class="text-justify">
+                  <span class="bullet-title">Profile: </span>
+                  <span
+                    >View and edit your personal information, such as your name,
+                    contact information, and job title.</span
+                  >
+                </p>
+              </li>
+              <li>
+                <p class="text-justify">
+                  <span class="bullet-title">Support: </span>
+                  <span
+                    >Contact our support staff or access help documentation if
+                    you have any issues or questions about the app or your
+                    training.</span
+                  >
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- footer -->
+      {% include 'main_footer.html' %}
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>
