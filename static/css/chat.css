@@ -173,7 +173,6 @@ p {
 
 /* Styling the avatar */
 .outgoing-chats-img {
-    /* display: inline-block; */
     width: 50px;
     float: right;
     margin-right: 1rem;
@@ -181,7 +180,7 @@ p {
 
 
 .scroll-to-bottom-widget{
-    position: fixed;
+    position: relative;
     bottom: 15%;
     right: 10%;
   }
