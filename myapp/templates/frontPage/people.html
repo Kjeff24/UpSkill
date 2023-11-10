@@ -1,0 +1,125 @@
+{% load static %} {% load i18n %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+<!-- just added -->
+
+<style>
+
+.card {
+  overflow: hidden;
+    cursor: pointer;
+     transition: all 0.5s;
+
+}
+  
+  .card:hover{
+  transform: scale(1.05);
+  z-index: 999;
+}
+</style>
+
+
+
+<div class="rounded-section text-center bg-white">
+  <h1 class="color-blue text-success">
+    Building better learning experiences with UpSkill
+  </h1>
+  <p class="color-light text-dark">
+    Read inspiring stories from around the world on how UpSkill is being used to
+    manage online learning and improve learner outcomes.
+  </p>
+  <div class="image-container  mt-4">
+    <div class="owl-carousel" >
+      <div class="px-1">
+        <div class="card">
+          <img
+            src="{% static 'assets/card-img-1.jpg' %}"
+            alt="{% translate 'UpSkill in action' %}"
+            class="card-img-top"
+            style="height: 200px; object-fit: cover"
+          />
+          <div class="card-body">
+            <p class="card-text">
+               <i class="bi bi-quote text-muted fs-4"></i>
+               We are beyond ecstatic to share our undeniably inspiring story of how we elevated our skillset by upgrading our stack with the incredible assistance of our revolutionary upskill platform.
+               With fervent determination and a burning desire for growth, we embarked on this transformative journey that has propelled us to new heights in both our personal and professional life. 
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="px-1">
+        <div class="card">
+          <img
+            src="{% static 'assets/card-img-2.jpg' %}"
+            alt="{% translate 'UpSkill team collaboration' %}"
+            class="card-img-top"
+            style="height: 200px; object-fit: cover"
+          />
+          <div class="card-body">
+            <p class="card-text">
+              <i class="bi bi-quote text-muted fs-4"></i>
+              The moment I engaged with the platform, a world of unprecedented opportunities unfolded before me.
+              The comprehensive and well-structured modules provided expert guidance, elevating my understanding and mastery of cutting-edge technologies.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="px-1">
+        <div class="card">
+          <img
+            src="{% static 'assets/card-img-3.jpg' %}"
+            alt="{% translate 'UpSkill workshop session' %}"
+            class="card-img-top"
+            style="height: 200px; object-fit: cover"
+          />
+          <div class="card-body">
+            <p class="card-text">
+               <i class="bi bi-quote text-muted fs-4"></i>
+               From refining our coding abilities to exploring the intricate depths of data science, each lesson enriched our knowledge base exponentially.
+                This upskill platform served as a guiding light, empowering us to tackle complex challenges head-on and fueling a newfound passion within ourselves.
+                As we progressed through the program, not only did it boost our confidence but also opened doors to exciting career prospects that seemed insurmountable before.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="px-1">
+        <div class="card">
+          <img
+            src="{% static 'assets/card-img-4.jpeg' %}"
+            alt="{% translate 'UpSkill in action' %}"
+            class="card-img-top"
+            style="height: 200px; object-fit: cover"
+          />
+          <div class="card-body">
+            <p class="card-text">
+               <i class="bi bi-quote text-muted fs-4"></i>
+               The transformation I have witnessed within myself truly defies bounds - 
+              from a hesitant beginner seeking to upgrade their stack to now an accomplished professional eager to make waves in the industry
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="px-1">
+        <div class="card">
+          <img
+            src="{% static 'assets/card-img-5.jpeg' %}"
+            alt="{% translate 'UpSkill in action' %}"
+            class="card-img-top"
+            style="height: 200px; object-fit: cover"
+          />
+          <div class="card-body">
+            <p class="card-text">
+               <i class="bi bi-quote text-muted fs-4"></i>
+               My journey has been nothing short of exhilarating, filled with moments of profound growth and triumphs that once seemed unattainable. Thanks to our remarkable upkill!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Just added-->
+
