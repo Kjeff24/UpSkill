@@ -30,14 +30,14 @@
       {% include 'main_navbar.html' %}
       <div
         class="d-flex flex-md-row flex-column gap-3 text-white p-3"
-        style="background-color: #2d2d39"
+        style="background-color: rgb(236, 236, 236)"
       >
-        <div class="col-lg-6 p-3">
-          <div class="col-2-content">
-            <h2 class="fs-4" style="color: #71c6dd;">
+        <div class="col-lg-6 p-3 ">
+          <div class="col-2-content bg-white p-2 rounded">
+            <h2 class="fs-4 text-success">
               Enrollment Now Open: Register for Our Exclusive Training Program
             </h2>
-            <p class="text-justify">
+            <p class="text-justify text-dark">
               Join our community of learners by enrolling in our dynamic and
               engaging training program.
             </p>
@@ -61,7 +61,7 @@
                   >
                 </div>
                 <br />
-                <button type="submit" class="btn-outline-secondary btn-lg">
+                <button type="submit" class="btn btn-success">
                   Submit
                 </button>
                 <div>
@@ -70,7 +70,7 @@
                     {% for message in messages %}
                     <li
                       {% if message.tags %}
-                      class="{{ message.tags }}"
+                      class="{{ message.tags }} text-success"
                       {% endif %}
                     >
                       {{ message }}
@@ -84,8 +84,8 @@
           </div>
         </div>
         <div class="col-lg-6 p-3 overflow-auto" style="max-height: 90vh">
-          <div class="col-1-content">
-            <h1 class="fs-3"  style="color: #71c6dd;">Welcome to SkillBuilder</h1>
+          <div class="col-1-content text-dark bg-white p-2 rounded">
+            <h1 class="fs-3 text-success">Welcome to SkillBuilder</h1>
             <p class="text-justify">
               Welcome to Skillbuilder, the online training app designed
               to help your workforce develop the skills they need to succeed.
@@ -107,7 +107,7 @@
             <ul>
               <li>
                 <p class="text-justify">
-                  <span class="bullet-title">Technical Skills: </span>
+                  <span class="bullet-title text-success">Technical Skills: </span>
                   <span
                     >Programming languages, database management, software
                     development, and more.</span
@@ -116,7 +116,7 @@
               </li>
               <li>
                 <p class="text-justify">
-                  <span class="bullet-title">Soft Skills: </span>
+                  <span class="bullet-title text-success">Soft Skills: </span>
                   <span
                     >Communication, teamwork, problem-solving, and other
                     essential skills for the modern workplace.</span
@@ -125,7 +125,7 @@
               </li>
               <li>
                 <p class="text-justify">
-                  <span class="bullet-title">Leadership Development: </span>
+                  <span class="bullet-title text-success">Leadership Development: </span>
                   <span
                     >Management skills, coaching and mentoring, strategic
                     thinking, and more.Technical Skills: Programming languages,
@@ -142,7 +142,7 @@
             <ul>
               <li>
                 <p class="text-justify">
-                  <span class="bullet-title">Course Catalog: </span>
+                  <span class="bullet-title text-success">Course Catalog: </span>
                   <span
                     >Browse our course catalog and sign up for new
                     courses.</span
@@ -151,7 +151,7 @@
               </li>
               <li>
                 <p class="text-justify">
-                  <span class="bullet-title">My Courses: </span>
+                  <span class="bullet-title text-success">My Courses: </span>
                   <span
                     >View your enrolled courses, track your progress, and view
                     upcoming deadlines.</span
@@ -160,7 +160,7 @@
               </li>
               <li>
                 <p class="text-justify">
-                  <span class="bullet-title">Resources: </span>
+                  <span class="bullet-title text-success">Resources: </span>
                   <span
                     >Access additional resources related to your training, such
                     as articles, videos, and discussion forums.</span
@@ -169,7 +169,7 @@
               </li>
               <li>
                 <p class="text-justify">
-                  <span class="bullet-title">Profile: </span>
+                  <span class="bullet-title text-success">Profile: </span>
                   <span
                     >View and edit your personal information, such as your name,
                     contact information, and job title.</span
@@ -178,7 +178,7 @@
               </li>
               <li>
                 <p class="text-justify">
-                  <span class="bullet-title">Support: </span>
+                  <span class="bullet-title text-success">Support: </span>
                   <span
                     >Contact our support staff or access help documentation if
                     you have any issues or questions about the app or your
