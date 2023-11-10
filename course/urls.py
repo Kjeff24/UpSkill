@@ -15,10 +15,5 @@ urlpatterns = [
     path('course/<str:pk2>/chat_room/<str:pk>/', chat_room.chatRoom, name='chat-room'),
     path('course/<str:pk2>/chat_room/<str:pk>/send-message', chat_room.sendMessages, name='send-message'),
     path('course/<str:pk2>/chat_room/<str:pk>/get-messages', chat_room.displayMessages, name='get-messages'),
-    path('course/chat_room/videoStream/<str:pk>', chat_room.videoStream, name='video-stream'),
-    path('course/chat_room/videoStream/get_token/', chat_room.getToken ),
-    path('course/chat_room/videoStream/create_member/', chat_room.createMember),
-    path('course/chat_room/videoStream/get_member/', chat_room.getMember),
-    path('course/chat_room/videoStream/delete_member/', chat_room.deleteMember),
     path('profile/<str:pk>/', profile_page.profile, name='profile'),
 ]
