@@ -50,6 +50,8 @@
 
 .chats {
     padding: 30px 15px 0 25px;
+    background-color: #024722b9;
+    background-repeat: repeat-y;
 }
 
 .msg-page {
@@ -180,7 +182,7 @@ p {
 
 
 .scroll-to-bottom-widget{
-    position: relative;
+    position: fixed;
     bottom: 15%;
     right: 10%;
   }
