@@ -98,6 +98,10 @@ class LearnerSignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',
                   'is_learner')
+    
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        return username.lower()
 
 
 
@@ -166,6 +170,10 @@ class TutorSignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1',
                   'password2', 'is_tutor')
+    
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        return username.lower()
 
 
 # User Form
@@ -214,6 +222,10 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'bio', 'avatar']
+    
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        return username.lower()
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')  # Retrieve the 'user' argument from kwargs
