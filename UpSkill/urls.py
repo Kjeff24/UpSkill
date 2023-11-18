@@ -12,6 +12,7 @@ from employerAdmin.employer_admin import tutor_admin_site
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", include("rest_api.urls")),
     path("", include("myapp.urls")),
     path("", include("course.urls")),
     path("", include("quiz.urls")),

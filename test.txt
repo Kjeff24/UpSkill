@@ -1,0 +1,17 @@
+rest_api/
+|-- __init__.py
+|-- models.py
+|-- serializers/
+|   |-- __init__.py
+|   |-- course_serializers.py
+|   |-- event_serializers.py
+|   |-- myapp_serializers.py
+|   |-- quiz_serializers.py
+|-- views/
+|   |-- __init__.py
+|   |-- course_views.py
+|   |-- event_views.py
+|   |-- myapp_views.py
+|   |-- quiz_views.py
+|-- urls.py
+

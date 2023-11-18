@@ -10,8 +10,8 @@ class User(AbstractUser):
     Custom User model that includes both employees and employers.
 
     Fields:
-        is_employer (bool): Indicates whether the user is an employer.
-        is_employee (bool): Indicates whether the user is an employee.
+        is_tutor (bool): Indicates whether the user is an employer.
+        is_learner (bool): Indicates whether the user is an employee.
         is_email_verified (bool): Indicates whether the user's email is verified.
         my_employer (str): The employer associated with the user.
         first_name (str): The first name of the user.
@@ -22,10 +22,10 @@ class User(AbstractUser):
     Methods:
         None
     """
-    is_tutor = models.BooleanField("Is employer",default=False)
-    is_learner = models.BooleanField("Is employee", default=False)
+    is_tutor = models.BooleanField("Is Tutor",default=False)
+    is_learner = models.BooleanField("Is Learner", default=False)
     is_email_verified = models.BooleanField(default=False)
     first_name = models.CharField(max_length=30, blank=False, null=False)
     last_name = models.CharField(max_length=30, blank=False, null=False)
     bio = models.TextField(blank=True, null=True)
-    avatar = models.ImageField(null=True, default="avatar.svg")
+    avatar = models.ImageField(null=True, blank=True, default="avatar.svg")
