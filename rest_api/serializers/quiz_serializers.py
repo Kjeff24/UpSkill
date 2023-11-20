@@ -3,28 +3,21 @@ from quiz.models import Quiz, Question, Answer, Result
 from myapp.models import User
 from rest_api.serializers import UserSerializer
 
-class AnswerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Answer
-        fields = '__all__'
-
-class QuestionSerializer(serializers.ModelSerializer):
-    answers = AnswerSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Question
-        fields = '__all__'
 
 class QuizSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True, read_only=True)
-
+    """
+    Serializer for get Quiz model
+    """
     class Meta:
         model = Quiz
         fields = '__all__'
 
 class ResultSerializer(serializers.ModelSerializer):
+    """
+    Serializer for get Result model
+    """
     user = UserSerializer()
 
     class Meta:
         model = Result
-        fields = '__all__'
+        fields = ['id', "user", "quiz", "score", "completion_time", "created"]

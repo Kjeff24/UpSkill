@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model, authenticate
-from rest_framework import serializers
+from rest_framework import serializers, status
+from rest_framework.response import Response
 
 UserModel = get_user_model()
 
@@ -10,10 +11,13 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     This serializer is used to validate the data for a new user and create the user.
     """
+    
+    avatar = serializers.ImageField(write_only=True, required=False)
+    
     class Meta:
         model = UserModel
         fields = ['username', 'email',
-                  'first_name', "last_name", 'password', 'is_learner', 'is_tutor']
+                  'first_name', "last_name", 'password', 'is_learner', 'is_tutor', 'avatar']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, clean_data):
@@ -26,11 +30,16 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         Returns:
         - UserModel: The created user object.
         """
+        avatar_data = clean_data.pop('avatar', None)
 
         user_obj = UserModel.objects.create_user(
             **clean_data
         )
-        user_obj.save()
+        
+        if avatar_data:
+            user_obj.avatar = avatar_data
+            user_obj.save()
+            
         return user_obj
 
 
@@ -86,12 +95,31 @@ class UserSerializer(serializers.ModelSerializer):
             return self.context['request'].build_absolute_uri(user.avatar.url)
         return None
 
-
 class ChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer to change user password
+    """
     model = UserModel
     
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
     confirm_new_password = serializers.CharField(required=True)
+    
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserModel
+        fields = ['username', 'email', 'first_name', 'last_name', 'bio', 'avatar']
+        
+    def update(self, instance, validated_data):
+        """
+        Maintain the avatar if not updated
+        """
+        # Handle the avatar separately to avoid setting it to null
+        avatar_data = validated_data.pop('avatar', None)
+        instance = super().update(instance, validated_data)
 
-   
+        if avatar_data:
+            instance.avatar = avatar_data
+            instance.save()
+
+        return instance

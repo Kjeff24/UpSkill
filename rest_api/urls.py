@@ -7,8 +7,8 @@ from .views import (
     MessageListAPIView, MessageDetailAPIView,
     ParticipantsListAPIView, 
     UserRegister, UserLogin,
-    UserLogout, UserView, UserChangePasswordAPIView,
-    QuizListView, QuizDetailView
+    UserLogout, UserView, UserChangePasswordAPIView, UserUpdateAPIView,
+    QuizListView, QuizDetailView, QuizDataAPIView, QuizSubmissionAPIView, ResultListAPIView
 )
 
 urlpatterns = [
@@ -16,6 +16,7 @@ urlpatterns = [
 	path('login/', UserLogin.as_view(), name='login'),
 	path('logout/', UserLogout.as_view(), name='logout'),
 	path('user/', UserView.as_view(), name='user'),
+	path('user/update', UserUpdateAPIView.as_view(), name='user'),
 	path('change_password/', UserChangePasswordAPIView.as_view(), name='change-password'),
     path('courses/', CourseListAPIView.as_view(), name='course-list'),
     path('courses/<int:pk>/', CourseDetailAPIView.as_view(), name='course-detail'),
@@ -30,4 +31,7 @@ urlpatterns = [
     path('participants/', ParticipantsListAPIView.as_view(), name='participants-list'),
     path('quizzes/', QuizListView.as_view(), name='quizzes-list'),
     path('quizzes/<int:pk>/', QuizDetailView.as_view(), name='quizzes-detail'),
+    path('quiz/<int:pk>/data/', QuizDataAPIView.as_view(), name='quiz-data-list'),
+    path('quiz/<int:pk>/save/', QuizSubmissionAPIView.as_view(), name='quiz-data-save'),
+    path('results/', ResultListAPIView.as_view(), name='quiz-data-save'),
 ]

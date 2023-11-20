@@ -1,8 +1,9 @@
-from rest_framework.exceptions import NotFound
-
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError, NotFound
+
+from django.http import Http404
 
 from course.models import Course, Resource, Announcement, Room, Message, Participants
 from rest_api.serializers import *
@@ -14,8 +15,13 @@ class CourseListAPIView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
     """
     Retrieve the queryset for listing courses based on the current user's participation of a course.
     """
-    queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    
+    def get_queryset(self):
+        try:
+            return Course.objects.all()
+        except Exception as e:
+            raise ValidationError({"error": str(e)})
     
 class CourseDetailAPIView(UserAuthenticatedSessionAPIView, generics.RetrieveAPIView):
     """
@@ -26,9 +32,6 @@ class CourseDetailAPIView(UserAuthenticatedSessionAPIView, generics.RetrieveAPIV
     def get_queryset(self):
         participant_courses = Course.objects.filter(participants__user=self.request.user)
 
-        # if not participant_courses:
-        #     return []
-        
         return participant_courses
             
 
@@ -44,8 +47,8 @@ class ResourceListAPIView(UserAuthenticatedSessionAPIView, generics.ListAPIView)
 
         # Filter resources based on the courses where the user is a participant
         queryset = Resource.objects.filter(course__in=participant_courses)
-
         return queryset
+
     
 class ResourceDetailAPIView(UserAuthenticatedSessionAPIView, generics.RetrieveAPIView):
     """
@@ -61,6 +64,7 @@ class ResourceDetailAPIView(UserAuthenticatedSessionAPIView, generics.RetrieveAP
         queryset = Resource.objects.filter(course__in=participant_courses)
 
         return queryset
+    
 
 
 class AnnouncementListAPIView(UserAuthenticatedSessionAPIView, generics.ListAPIView):

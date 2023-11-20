@@ -1,11 +1,14 @@
-from rest_framework import permissions, status, views
+from rest_framework import permissions, status, views, generics
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_api.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, ChangePasswordSerializer
+from rest_api.serializers import (UserRegisterSerializer, UserLoginSerializer,
+                                  UserSerializer, ChangePasswordSerializer, UserUpdateSerializer)
 from rest_api.permissions import UserAuthenticatedSessionAPIView
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
+
+UserModel = get_user_model()
 
 
 class UserRegister(APIView):
@@ -122,7 +125,11 @@ class UserView(UserAuthenticatedSessionAPIView, APIView):
 
         return Response({'user': user_data}, status=status.HTTP_200_OK)
 
+
 class UserChangePasswordAPIView(UserAuthenticatedSessionAPIView, views.APIView):
+    """
+    API View to change user password.
+    """
     serializer_class = ChangePasswordSerializer
 
     def put(self, request, *args, **kwargs):
@@ -143,3 +150,18 @@ class UserChangePasswordAPIView(UserAuthenticatedSessionAPIView, views.APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class UserUpdateAPIView(UserAuthenticatedSessionAPIView, generics.RetrieveUpdateAPIView):
+    """
+    API View for updating user details.
+    """
+    queryset = UserModel.objects.all()
+    serializer_class = UserUpdateSerializer
+
+    def get_object(self):
+        # Retrieve the user instance based on the request's user
+        return self.request.user 
+
+
+    
