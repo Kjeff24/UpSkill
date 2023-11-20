@@ -10,17 +10,17 @@ from event.models import *
 from myapp.models import User
 
 
-@register(User, site=tutor_admin_site)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'is_email_verified', 'last_login')
+# @register(User, site=tutor_admin_site)
+# class UserAdmin(admin.ModelAdmin):
+#     list_display = ('username', 'email', 'is_email_verified', 'last_login')
     
-    def get_queryset(self, request):
-        # Filter queryset to show only the courses created by the logged-in tutor
-        qs = super().get_queryset(request)
-        if request.user.is_tutor:
-            return qs.filter(id=request.user.id)
-        else:
-            return qs
+#     def get_queryset(self, request):
+#         # Filter queryset to show only the courses created by the logged-in tutor
+#         qs = super().get_queryset(request)
+#         if request.user.is_tutor:
+#             return qs.filter(id=request.user.id)
+#         else:
+#             return qs
     
     # def formfield_for_foreignkey(self, db_field, request, **kwargs):
     #     if db_field.name == "course":

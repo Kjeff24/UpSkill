@@ -3,8 +3,13 @@ from django.contrib.auth import login, logout
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_api.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
+from rest_api.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, UserChangePassword
 from rest_api.permissions import UserAuthenticatedSessionAPIView
+from rest_framework import generics
+
+from django.contrib.auth import get_user_model
+
+UserModel = get_user_model()
 
 class UserRegister(APIView):
     """
@@ -28,7 +33,7 @@ class UserRegister(APIView):
             and a status of HTTP 201 Created. If there is an error in the registration
             process, returns a response with HTTP 400 Bad Request.
         """
-        data=request.data
+        data = request.data
         data["username"] = data["username"].lower()
         data["email"] = data.get("email", "").lower()
 
@@ -95,7 +100,7 @@ class UserLogout(APIView):
         logout(request)
         return Response(status=status.HTTP_200_OK)
 
-        
+
 class UserView(UserAuthenticatedSessionAPIView, APIView):
     """
     API View to get logged in user details.
@@ -114,7 +119,18 @@ class UserView(UserAuthenticatedSessionAPIView, APIView):
         Returns:
         - Returns a response with user details and HTTP 200 OK status.
         """
-        serializer = self.serializer_class(request.user, context={'request': request})
+        serializer = self.serializer_class(
+            request.user, context={'request': request})
         user_data = serializer.data
 
         return Response({'user': user_data}, status=status.HTTP_200_OK)
+
+class UserChangePasswordAPIView(generics.UpdateAPIView):
+    serializer_class = UserChangePassword
+    lookup_field = 'pk'
+    
+    
+    def get_queryset(self):
+        user = self.request.user
+        return UserModel.objects.filter(username=user)
+    

@@ -85,3 +85,15 @@ class UserSerializer(serializers.ModelSerializer):
             # Assuming MEDIA_URL is configured in your Django settings
             return self.context['request'].build_absolute_uri(user.avatar.url)
         return None
+
+
+class UserChangePassword(serializers.ModelSerializer):
+    
+    # new_password = serializers.CharField(write_only=True)
+    # confirm_new_password = serializers.CharField(write_only=True)
+    
+    class Meta:
+        model = UserModel
+        fields = ['password']
+        
+    

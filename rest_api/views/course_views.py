@@ -1,3 +1,5 @@
+from rest_framework.exceptions import NotFound
+
 from rest_framework import generics, status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
@@ -8,19 +10,47 @@ from rest_api.permissions import UserAuthenticatedSessionAPIView
 
 
 
-class CourseListView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
+class CourseListAPIView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
     """
-    Retrieve the queryset for listing courses based on the current user's participation.
+    Retrieve the queryset for listing courses based on the current user's participation of a course.
     """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-
-
-class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Course.objects.all()
+    
+class CourseDetailAPIView(UserAuthenticatedSessionAPIView, generics.RetrieveAPIView):
+    """
+    Retrieve the queryset for a course based on the current user's participation of a course.
+    """
     serializer_class = CourseSerializer
+    
+    def get_queryset(self):
+        participant_courses = Course.objects.filter(participants__user=self.request.user)
 
-class ResourceListView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
+        # if not participant_courses:
+        #     return []
+        
+        return participant_courses
+            
+
+class ResourceListAPIView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
+    """
+    Retrieve the queryset for listing resources based on the current user's participation of a course.
+    """
+    serializer_class = ResourceSerializer
+    
+    def get_queryset(self):
+        # Get the courses where the request.user is a participant
+        participant_courses = Course.objects.filter(participants__user=self.request.user)
+
+        # Filter resources based on the courses where the user is a participant
+        queryset = Resource.objects.filter(course__in=participant_courses)
+
+        return queryset
+    
+class ResourceDetailAPIView(UserAuthenticatedSessionAPIView, generics.RetrieveAPIView):
+    """
+    Retrieve the queryset for a resource based on the current user's participation of a course.
+    """
     serializer_class = ResourceSerializer
     
     def get_queryset(self):
@@ -32,11 +62,26 @@ class ResourceListView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
 
         return queryset
 
-class ResourceDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Resource.objects.all()
-    serializer_class = ResourceSerializer
 
-class AnnouncementListView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
+class AnnouncementListAPIView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
+    """
+    Retrieve the queryset for listing announcements based on the current user's participation of a course.
+    """
+    serializer_class = AnnouncementSerializer
+    
+    def get_queryset(self):
+        # Get the courses where the request.user is a participant
+        participant_courses = Course.objects.filter(participants__user=self.request.user)
+
+        # Filter announcement based on the courses where the user is a participant
+        queryset = Announcement.objects.filter(course__in=participant_courses)
+
+        return queryset
+    
+class AnnouncementDetailAPIView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
+    """
+    Retrieve the queryset for an announcement based on the current user's participation of a course.
+    """
     serializer_class = AnnouncementSerializer
     
     def get_queryset(self):
@@ -48,10 +93,26 @@ class AnnouncementListView(UserAuthenticatedSessionAPIView, generics.ListAPIView
 
         return queryset
 
-class AnnouncementDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = AnnouncementSerializer
 
-class RoomListView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
+class RoomListAPIView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
+    """
+    Retrieve the queryset for listing rooms based on the current user's participation of a course.
+    """
+    serializer_class = RoomSerializer
+    
+    def get_queryset(self):
+        # Get the courses where the request.user is a participant
+        participant_courses = Course.objects.filter(participants__user=self.request.user)
+
+        # Filter room based on the courses where the user is a participant
+        queryset = Room.objects.filter(course__in=participant_courses)
+
+        return queryset
+    
+class RoomDetailAPIView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
+    """
+    Retrieve the queryset for a room based on the current user's participation of a course.
+    """
     serializer_class = RoomSerializer
     
     def get_queryset(self):
@@ -63,11 +124,10 @@ class RoomListView(UserAuthenticatedSessionAPIView, generics.ListAPIView):
 
         return queryset
 
-class RoomDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
-
-class MessageListView(UserAuthenticatedSessionAPIView, generics.ListCreateAPIView):
+class MessageListAPIView(UserAuthenticatedSessionAPIView, generics.ListCreateAPIView):
+    """
+    Retrieve the queryset for listing messages based on the current user's participation of a course.
+    """
     serializer_class = MessageSerializer
     
     def get_queryset(self):
@@ -79,11 +139,26 @@ class MessageListView(UserAuthenticatedSessionAPIView, generics.ListCreateAPIVie
 
         return queryset
 
-class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Message.objects.all()
+class MessageDetailAPIView(UserAuthenticatedSessionAPIView, generics.ListCreateAPIView):
+    """
+    Retrieve the queryset for a message based on the current user's participation of a course.
+    """
     serializer_class = MessageSerializer
+    
+    def get_queryset(self):
+        # Get the courses where the request.user is a participant
+        participant_courses = Course.objects.filter(participants__user=self.request.user)
 
-class ParticipantsListView(UserAuthenticatedSessionAPIView, generics.ListCreateAPIView):
+        # Filter messages based on the rooms associated with the participant's courses
+        queryset = Message.objects.filter(room__course__in=participant_courses)
+
+        return queryset
+
+
+class ParticipantsListAPIView(UserAuthenticatedSessionAPIView, generics.ListCreateAPIView):
+    """
+    Retrieve the queryset for listing participcipants.
+    """
     serializer_class = ParticipantsSerializer
     
     def get_queryset(self):
@@ -110,6 +185,3 @@ class ParticipantsListView(UserAuthenticatedSessionAPIView, generics.ListCreateA
         # If participant does not exist, proceed with the creation
         return super().create(request, *args, **kwargs)
 
-class ParticipantsDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Participants.objects.all()
-    serializer_class = ParticipantsSerializer
