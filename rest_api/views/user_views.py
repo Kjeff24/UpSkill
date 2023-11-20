@@ -1,15 +1,12 @@
-from rest_framework import permissions, status
-from django.contrib.auth import login, logout
+from rest_framework import permissions, status, views
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_api.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, UserChangePassword
+from rest_api.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, ChangePasswordSerializer
 from rest_api.permissions import UserAuthenticatedSessionAPIView
-from rest_framework import generics
+from django.contrib.auth import login, logout
+from django.contrib.auth.hashers import make_password
 
-from django.contrib.auth import get_user_model
-
-UserModel = get_user_model()
 
 class UserRegister(APIView):
     """
@@ -125,12 +122,24 @@ class UserView(UserAuthenticatedSessionAPIView, APIView):
 
         return Response({'user': user_data}, status=status.HTTP_200_OK)
 
-class UserChangePasswordAPIView(generics.UpdateAPIView):
-    serializer_class = UserChangePassword
-    lookup_field = 'pk'
-    
-    
-    def get_queryset(self):
-        user = self.request.user
-        return UserModel.objects.filter(username=user)
-    
+class UserChangePasswordAPIView(UserAuthenticatedSessionAPIView, views.APIView):
+    serializer_class = ChangePasswordSerializer
+
+    def put(self, request, *args, **kwargs):
+        serializer = ChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            old_password = serializer.data.get('old_password')
+            new_password = serializer.data.get('new_password')
+            confirm_new_password = serializer.data.get('confirm_new_password')
+
+            if not request.user.check_password(old_password):
+                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+            if new_password != confirm_new_password:
+                return Response({"new_password": ["New password and confirm new password do not match."]}, status=status.HTTP_400_BAD_REQUEST)
+
+            request.user.password = make_password(new_password)
+            request.user.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

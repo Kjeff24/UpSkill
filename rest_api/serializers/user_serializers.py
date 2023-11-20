@@ -87,13 +87,11 @@ class UserSerializer(serializers.ModelSerializer):
         return None
 
 
-class UserChangePassword(serializers.ModelSerializer):
+class ChangePasswordSerializer(serializers.Serializer):
+    model = UserModel
     
-    # new_password = serializers.CharField(write_only=True)
-    # confirm_new_password = serializers.CharField(write_only=True)
-    
-    class Meta:
-        model = UserModel
-        fields = ['password']
-        
-    
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    confirm_new_password = serializers.CharField(required=True)
+
+   
