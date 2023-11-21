@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import permissions, status, views, generics
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
@@ -7,6 +8,7 @@ from rest_api.serializers import (UserRegisterSerializer, UserLoginSerializer,
 from rest_api.permissions import UserAuthenticatedSessionAPIView
 from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
+from rest_framework.authtoken.models import Token
 
 UserModel = get_user_model()
 
@@ -71,11 +73,14 @@ class UserLogin(APIView):
         """
         data = request.data
         data["username"] = data["username"].lower()
+        user = get_object_or_404(UserModel, username=data['username'])
+         # If the password is correct, generate or get the user's token
+        token, created = Token.objects.get_or_create(user=user)
         serializer = UserLoginSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.check_user(data)
             login(request, user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({"user":serializer.data, "token": token.key}, status=status.HTTP_200_OK)
 
 
 class UserLogout(APIView):
@@ -147,7 +152,7 @@ class UserChangePasswordAPIView(UserAuthenticatedSessionAPIView, views.APIView):
 
             request.user.password = make_password(new_password)
             request.user.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response({"message":"Password changed successfully"}, status=status.HTTP_204_NO_CONTENT)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

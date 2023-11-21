@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'myapp',
     'course',
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'quiz',
     'employerAdmin',
     'rest_api',
+    'drf_yasg',
 ]
 
 AUTH_USER_MODEL  = 'myapp.User'
@@ -148,3 +150,10 @@ EMAIL_USE_TLS = True
 PASSWORD_RESET_TIMEOUT = 600
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'NON_FIELD_ERRORS_KEY': 'error',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
