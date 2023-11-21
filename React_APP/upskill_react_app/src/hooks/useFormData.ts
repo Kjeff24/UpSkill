@@ -6,14 +6,8 @@ function useFormData(fields: formStateType): any {
   const inputChange = (event: React.ChangeEvent<HTMLFormElement>) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
-  const submitData = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log(formData);
-    // fields.setToken("Token");
-    fields.setToken ? fields.setToken() : null;
-  };
 
-  return [formData, inputChange, submitData];
+  return [formData, inputChange];
 }
 
 export default useFormData;

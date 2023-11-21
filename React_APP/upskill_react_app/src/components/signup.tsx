@@ -9,11 +9,10 @@ export type formStateType = {
   password: string;
   conpassword?: string;
   personality: string;
-  setToken?: () => void;
 };
 
 const Signup = () => {
-  const [formData, inputChange, submitData] = useFormData({
+  const [formData, inputChange] = useFormData({
     firstname: "",
     lastname: "",
     username: "",
@@ -22,6 +21,12 @@ const Signup = () => {
     conpassword: "",
     personality: "learner",
   });
+
+  const submitData = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    console.log(formData); // process the form input
+  };
 
   return (
     <form

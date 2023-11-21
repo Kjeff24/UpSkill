@@ -1,20 +1,19 @@
 import useFormData from "../hooks/useFormData";
 import FormInput from "./FormInput";
 
-import { useContext } from "react";
-
-import { tokenContext } from "../contexts/token-context";
-
 const Signin = () => {
-  const context = useContext(tokenContext);
-
-  const [formData, inputChange, submitData] = useFormData({
+  const [formData, inputChange] = useFormData({
     username: "",
     email: "",
     password: "",
     personality: "learner",
-    setToken: context.setToken,
   });
+
+  const submitData = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    console.log(formData); // process the form input
+  };
 
   return (
     <form

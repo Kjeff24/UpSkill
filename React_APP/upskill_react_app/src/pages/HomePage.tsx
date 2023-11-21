@@ -6,6 +6,8 @@ import Footer_des_card from "../components/footer-des_card";
 import Tech_tools_card from "../components/tech-tools_card";
 import Footer_tools_card from "../components/footer-tools-card";
 
+import image from "../assets/images/home-v-1.jpg";
+
 const tools_name = [
   "html / css",
   "javascript",
@@ -108,35 +110,30 @@ const HomePage = () => {
       >
         <section className="mt-4 " id="why-upskill">
           <div className="row fs-5">
-            <div className="col-lg-6">
-              <h2 className="text-success">Why chose upskin</h2>
-              <div className="description">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-                  quibusdam veniam, tenetur, nobis repellendus aperiam corrupti
-                  ea dolorem accusantium perspiciatis eum unde consectetur
-                  mollitia quo id, tempore ut doloribus quisquam illum
-                  cupiditate. Assumenda mollitia possimus accusamus numquam
-                  laboriosam voluptas alias neque quas doloribus, minima a non
-                  nisi at minus velit modi nostrum vero hic accusantium dolorem
-                  ipsum quia quisquam?
+            <div className="col-lg-6 d-flex align-items-center">
+              <div className="">
+                <h2 className="text-success mb-3">Why choose UpSkill?</h2>
+                <p className="text-dark h1">
+                  Empowering you to provide quality eLearning experiences
                 </p>
+                <div className="description mb-2">
+                  <p>
+                    At UpSkill, we are on a mission to empower employers to
+                    improve our world with open source employee training
+                    software. With hundreds of millions of users around the
+                    globe and translated into 2 languages, UpSkill gives you the
+                    freedom to create online teaching and training solutions
+                    that best meet your learners' needs.
+                  </p>
+                </div>
               </div>
             </div>
             <div className="col-lg-6">
-              <h2 className="text-success">Why chose upskin</h2>
-              <div className="description">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-                  quibusdam veniam, tenetur, nobis repellendus aperiam corrupti
-                  ea dolorem accusantium perspiciatis eum unde consectetur
-                  mollitia quo id, tempore ut doloribus quisquam illum
-                  cupiditate. Assumenda mollitia possimus accusamus numquam
-                  laboriosam voluptas alias neque quas doloribus, minima a non
-                  nisi at minus velit modi nostrum vero hic accusantium dolorem
-                  ipsum quia quisquam?
-                </p>
-              </div>
+              <img
+                src={image}
+                alt=""
+                className="img-fluid rounded mx-auto p-2"
+              />
             </div>
           </div>
         </section>

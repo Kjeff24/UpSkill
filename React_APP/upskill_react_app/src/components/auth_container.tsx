@@ -1,19 +1,13 @@
 import Signin from "./signin";
 import Signup from "./signup";
+import loginImage from "../assets/images/Upskill.png";
 
 const Auth_container = () => {
   return (
     <section className="container-fluid bg-white" style={{ height: "100vh" }}>
       <div className="row h-100 ">
-        <div className="col-lg-6 bg-primary p-3 d-flex justify-content-center align-items-center">
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda
-            deserunt vel reprehenderit accusamus culpa velit modi nostrum! At
-            quidem ex, libero quibusdam dolore id quo nobis eveniet, in sunt
-            molestiae nulla cumque iusto? Hic velit, doloremque sequi aliquid
-            amet error dignissimos et exercitationem nisi in repellat quisquam?
-            Esse, pariatur facere!
-          </p>
+        <div className="col-lg-6 bg-primary p-3 d-flex justify-content-center align-items-center  ">
+          <img src={loginImage} alt="" width={"70%"} />
         </div>
         <div className="col-lg-6 d-flex justify-content-center align-items-center p-3">
           <div
