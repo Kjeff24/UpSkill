@@ -2,9 +2,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
-# Create your models here.
+from django.dispatch import receiver
+from django.urls import reverse
+from django_rest_passwordreset.signals import reset_password_token_created
+from django.core.mail import send_mail
 
-# User models that includes employee and employers
+
 class User(AbstractUser):
     """
     Custom User model that includes both employees and employers.
@@ -22,10 +25,37 @@ class User(AbstractUser):
     Methods:
         None
     """
-    is_tutor = models.BooleanField("Is Tutor",default=False)
+    is_tutor = models.BooleanField("Is Tutor", default=False)
     is_learner = models.BooleanField("Is Learner", default=False)
     is_email_verified = models.BooleanField(default=False)
     first_name = models.CharField(max_length=30, blank=False, null=False)
     last_name = models.CharField(max_length=30, blank=False, null=False)
     bio = models.TextField(blank=True, null=True)
     avatar = models.ImageField(null=True, blank=True, default="avatar.svg")
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+
+    # the below line concatenates your website's reset password URL and the reset email token which will be required at a later stage
+    
+    reset_password_url = "{}?token={}".format(
+            instance.request.build_absolute_uri(reverse('password_reset:reset-password-confirm')),
+            reset_password_token.key)
+    email_plaintext_message = f"Open the link to reset your password: {reset_password_url}"
+
+    """
+        this below line is the django default sending email function, 
+        takes up some parameter (title(email title), message(email body), from(email sender), to(recipient(s))
+    """
+    send_mail(
+        # title:
+        "Password Reset for {title}".format(title="UpSkill portal account"),
+        # message:
+        email_plaintext_message,
+        # from:
+        "upskill@training.com",
+        # to:
+        [reset_password_token.user.email],
+        fail_silently=False,
+    )

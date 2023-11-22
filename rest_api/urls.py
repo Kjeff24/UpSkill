@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import (
     CourseListAPIView, CourseDetailAPIView,
     ResourceListAPIView, ResourceDetailAPIView,
@@ -6,7 +6,7 @@ from .views import (
     RoomListAPIView, RoomDetailAPIView,
     MessageListAPIView, MessageDetailAPIView,
     ParticipantsListAPIView, 
-    UserRegister, UserLogin,
+    UserRegister, UserLogin, UserActivateAPIView,
     UserLogout, UserView, UserChangePasswordAPIView, UserUpdateAPIView,
     QuizListView, QuizDetailView, QuizDataAPIView, QuizSubmissionAPIView, ResultListAPIView
 )
@@ -16,7 +16,9 @@ urlpatterns = [
 	path('login/', UserLogin.as_view(), name='login'),
 	path('logout/', UserLogout.as_view(), name='logout'),
 	path('user/', UserView.as_view(), name='user'),
-	path('user/update', UserUpdateAPIView.as_view(), name='user'),
+	path('user_activation/<uidb64>/<token>/', UserActivateAPIView.as_view(), name='user-activate'),
+	path('user/update', UserUpdateAPIView.as_view(), name='user-update'),
+    path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 	path('change_password/', UserChangePasswordAPIView.as_view(), name='change-password'),
     path('courses/', CourseListAPIView.as_view(), name='course-list'),
     path('courses/<int:pk>/', CourseDetailAPIView.as_view(), name='course-detail'),

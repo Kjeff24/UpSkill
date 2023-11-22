@@ -3,20 +3,31 @@ from rest_framework import permissions, status, views, generics
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+
 from rest_api.serializers import (UserRegisterSerializer, UserLoginSerializer,
                                   UserSerializer, ChangePasswordSerializer, UserUpdateSerializer)
 from rest_api.permissions import UserAuthenticatedSessionAPIView
+
 from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.hashers import make_password
-from rest_framework.authtoken.models import Token
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.conf import settings
+from django.core.mail import EmailMessage
+from myapp.tokens import account_activation_token
+from django.shortcuts import render, redirect, reverse
 
 UserModel = get_user_model()
 
 
-class UserRegister(APIView):
+class UserRegister(generics.GenericAPIView):
     """
     API View for user registration.
     """
+    serializer_class = UserRegisterSerializer
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
@@ -36,15 +47,46 @@ class UserRegister(APIView):
             process, returns a response with HTTP 400 Bad Request.
         """
         data = request.data
-        data["username"] = data["username"].lower()
-        data["email"] = data.get("email", "").lower()
 
         serializer = UserRegisterSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
-            user = serializer.create(data)
+            user = serializer.save()
             if user:
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                # Send confirmation email
+                self.send_activation_email(user, request)
+                return Response({"message": "Verification email has been sent to your account"}, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    def send_activation_email(self, user, request):
+        """
+        Function to send activation email to the user.
+
+        Args:
+            user: The User object.
+            request: The HTTP request object.
+
+        Returns:
+            None.
+        """
+        current_site = get_current_site(request)
+        email_subject = 'Activate your account'
+
+        # render a template file and pass in context
+        email_body = render_to_string('authenticate/api_activate_user.html', {
+            'user': user,
+            'domain': current_site,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user)
+        })
+
+        # create an email from using EmailMessage()
+        email = EmailMessage(subject=email_subject, body=email_body,
+                                from_email=settings.EMAIL_HOST_USER,
+                                to=[user.email]
+                                )
+
+        # send email
+        email.send()
 
 
 class UserLogin(APIView):
@@ -103,7 +145,7 @@ class UserLogout(APIView):
         - Returns a response with HTTP 200 OK, indicating a successful logout.
         """
         logout(request)
-        return Response(status=status.HTTP_200_OK)
+        return Response({"message":"Logout successful"}, status=status.HTTP_200_OK)
 
 
 class UserView(UserAuthenticatedSessionAPIView, APIView):
@@ -131,6 +173,17 @@ class UserView(UserAuthenticatedSessionAPIView, APIView):
         return Response({'user': user_data}, status=status.HTTP_200_OK)
 
 
+class UserUpdateAPIView(UserAuthenticatedSessionAPIView, generics.RetrieveUpdateAPIView):
+    """
+    API View for updating user details.
+    """
+    queryset = UserModel.objects.all()
+    serializer_class = UserUpdateSerializer
+
+    def get_object(self):
+        # Retrieve the user instance based on the request's user
+        return self.request.user 
+    
 class UserChangePasswordAPIView(UserAuthenticatedSessionAPIView, views.APIView):
     """
     API View to change user password.
@@ -156,17 +209,33 @@ class UserChangePasswordAPIView(UserAuthenticatedSessionAPIView, views.APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
-class UserUpdateAPIView(UserAuthenticatedSessionAPIView, generics.RetrieveUpdateAPIView):
+class UserActivateAPIView(APIView):
     """
-    API View for updating user details.
+    API View to activate user account.
     """
-    queryset = UserModel.objects.all()
-    serializer_class = UserUpdateSerializer
 
-    def get_object(self):
-        # Retrieve the user instance based on the request's user
-        return self.request.user 
+    def get(self, request, uidb64, token):
+        """
+        Endpoint to activate user account.
 
+        Args:
+            request: The HTTP request object.
+            uidb64 (str): The encoded user ID.
+            token (str): The activation token.
 
-    
+        Returns:
+            A JSON response for successful account activation or activation failure.
+        """
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = UserModel.objects.get(pk=uid)
+        except Exception as e:
+            user = None
+
+        if user and account_activation_token.check_token(user, token):
+            user.is_email_verified = True
+            user.save()
+
+            return redirect(reverse('user'))
+
+        return render(request, 'authenticate/activate-failed.html', {"user": user})  # Rendering a failure HTML template

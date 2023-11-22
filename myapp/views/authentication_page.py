@@ -89,9 +89,8 @@ def learnerSignupPage(request):
         form = LearnerSignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user.is_email_verified = True
             user.save()
-            # send_activation_email(user, request)
+            send_activation_email(user, request)
             messages.add_message(request, messages.SUCCESS,
                                          'You can login now')
             return redirect('login')
