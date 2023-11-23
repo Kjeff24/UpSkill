@@ -92,7 +92,7 @@ def learnerSignupPage(request):
             user.save()
             send_activation_email(user, request)
             messages.add_message(request, messages.SUCCESS,
-                                         'You can login now')
+                                         'An activation email has been sent to your account')
             return redirect('login')
         else:
             for field, errors in form.errors.items():
